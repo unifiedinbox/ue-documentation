@@ -1,0 +1,1203 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "\n# Introduction\n\nWelcome to the UnificationEngine® API! You can use our API to access UnificationEngine® API endpoints, which can communicate with various connectors, such as Facebook, Twitter, LinkedIn, Xing, Weibo and more. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n\n  # Create Connector\n\nClick \"Add Connector\" button from the \"My Connectors\" page and create a connector by providing the Endpoint, Capabilities, Timeout, Name and Identifier, oAuth and Public Key. \nAfter creating connector the developer will get an connector access key and secret.\n\nA connector contains\n\n**Endpoint**\n\nThe endpoint is where the Unification Engine can connect to call the connector.\n\n**Capabilities**\n\nA connector can have the following capabilities\n\n* Sending\n* Receiving\n* Folders\n* Push\n* Delete\n* Contacts\n* Flags\n* Stats\n* Binary\n* Image\n* Video\n* HTML\n* Plain\n\n**Timeout** (ms)\n\nThe timeout is the time in milliseconds, after which the Unified Engine considers the api call have failed.\n\n**Scheme**\n\nSchemes specifying a concrete syntax and associated protocols define each URI. Scheme should contain only alphabets and numerals without any spaces. The format of URI is \"scheme:[//[user:password@]domain[:port]][/]path\". You can see an example below.\n\ncurl -H \"Content-Type: application/json\" https://a2db9638d11646d282885e8f2f72fabb:3c02ec16f14ad5ec4cf9b8dafd3d81c8@twitter-connector/v2/test --data \"{\\\"uri\\\":\\\"twitter://57880525-4GR3YESZdVCBMTV0DHXz7nRJbos65hQ5IH1m0QOk7FfUh0:1RwUrdNIfstHlL4agS2vU2YVkmgh3NDBOPvHn7sKDrKdAkY@twitter.com\\\", \\\"apiToken\\\":\\\"5B1fn6KFFsABk3ffZMPxRTLcg:DzL1tgJk5RWeHURbyMjFAQpUVddacjBn9kFbNYcM6jPgk\\\"}\" -k\n\n**Name**\n\nThe name of the connector, which should be unique.\n\n**Accesskey and Secret**\n\nClient id(Accesskey) and Client secret(Secret) used for authenticating the api calls to service (facebook, twitter etc). Every call to connector will have a parameter, apiToken=Accesskey:Secret.\n\n\n**Public Key**:  \nUsed to encrypt the communication with the connector\n\n\n\n\\\n![create connector](images/createConnector.png)\n\n# Create Application\n\nClick \"Add Application\" button from the \"My Applications\" page and create the application by enter the application name. \nAfter creating application the developer will get an application access key and secret.\n\n![create application](images/createApplication.png)\n\n# Add Connector to an Application\n\nChoose a connector from the connectors list and click next button and provide application key and secret. If your application does not have any key and secret, just key in them as \"no_key\" and \"no_secret\" respectively and press next button and finally click the submit button for adding the connector to the application.\n\n<br>\n\n![add connector to application](images/addConnector.png)\n\n# Create user for the application\n\nFor adding connecton like facebook, twitter etc, a user has to be created for an application using the application access key and secret.\n\n# Work flow for sending message\n\nFor sending a message using a connecton\n\n1. Add the connector to the application\n2. Create a user for an application by using application access key and secret (UE route for creating user is \"**/user/create**\"). Save the user key and secret for further actions.\n3. Create a connection by using user access key and secret (UE route for creating connection is \"**/connection/add**\")\n4. Send message to the service by using the connection (UE route for creating user is \"**/message/send**\")\n\n# Work flow for sending push notification\n\n  Currently the following connectors have push capabilitiy\n  \n  1. APNS\n  2. BBM\n  3. Facebook\n  4. Fbmessenger\n  5. Kik\n  6. Line\n  7. Skype\n  8. SMS\n  9. Telegram\n  10. Threema\n  11. Viber\n  12. ViberPA\n  13. Wechat\n  14. Whatsapp\n  15. WhatsAppSandbox\n  16. Zalo\n\n\n**Work flow for sending push notification using webhook url**\n1. Set a webhook url for the application in developer portal.\n2. Authentication can provide in the webhook url itself and application needs to handle it in webhook url route.\n3. Add the connector to the application.\n4. Create a user for an application by using application access key and secret (UE route for creating user is \"**/user/create**\"). Save the user key and secret for further actions.\n5. Create a connection by using user access key and secret (UE route for creating connection is \"**/connection/add**\"). On creating a connection, the connection details will be saved in the connector DB. If the connector has push capability. (UE route to connector is \"**push/request**\").\n6. Connector will receive the webhook messages send by the service, under the connector route \"**/messages**\".\n7. Once the connector receives the webhook messages from the service, it will send a push notification to UE using the route \"**/push/notification**\"\n8. The application will receive the notification in the webhook route set under the developer portal.\n\n<br>   \n",
+    "version" : "v2",
+    "title" : "UnificationEngine"
+  },
+  "host" : "apiv2.unificationengine.com",
+  "basePath" : "/v2",
+  "tags" : [ {
+    "name" : "User",
+    "description" : "User operations"
+  }, {
+    "name" : "Connector",
+    "description" : "Connector operations"
+  }, {
+    "name" : "Connection",
+    "description" : "Connection operations"
+  }, {
+    "name" : "Messages",
+    "description" : "Messaging using UnificationEngine®"
+  }, {
+    "name" : "IoT Connector",
+    "description" : "IoT connector operations"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/user/create" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Create user.",
+        "description" : "This endpoint will create a UnificationEngine® user for the developer's application. This user is required for adding the connections like facebook, twitter etc.\n\n\"yourapikey\" and \"yourapisecret\" will get from the developer portal\n\n<br>\n\n![add connector](images/applicationDetails.png)\n\n<br>\n\nThe user should be created with the key and secret of the application. On successful creation of a user, a uri containing the access key and the secret for the user will be returned as response, which is required for all further api calls. The uri will be in the format \"user://access_key:secret@\".\n  \\\n**The command to create a user for an application is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/user/create -u yourapikey:yourapisecret --data '{}' -k\n\n <br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/user/create\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : " ",
+          "description" : " ",
+          "required" : false,
+          "schema" : {
+            "type" : "object"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A User object",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/delete" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Delete user.",
+        "description" : "This endpoint will delete the user for the application, specified in the uri parameter. This api call should be authenticated with the key and secret of the application.\n\\\n**The command to delete a user of an application is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/user/delete -u yourapikey:yourapisecret --data '{\"uri\":\"user://USER_ACCESSKEY@\"}\n    \n <br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/user/delete\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "uri",
+          "description" : "user://e9759590-54ef-4cd3-a01c-cb2241ddd812:1aee1a25-e0c4-4036-a8fd-4d41adc8611b@",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/uri"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/list" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "List users.",
+        "description" : "This endpoint will list all the users created for the application. This api call should be authenticated with the key and secret of the application.\n\n\\\n**The command to list the users of an application is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/user/list -u yourapikey:yourapisecret --data '{}'\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/user/list\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "example" : { }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_2"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/connector/capabilities" : {
+      "post" : {
+        "tags" : [ "Connector" ],
+        "summary" : "List connector capabilities.",
+        "description" : "This endpoint will list all the capabilities of a connector, user, application and connection.\n\\\nIf the \"uri\" parameter is empty, for eg \"{\\\"uri\\\":\\\"\\\"}\", then you will get the capabilities of all the connectors that are assigned to the particular application.\n\\\nIf the uri \"scheme\" is \"unified\", for eg \"{\\\"uri\\\":\\\"unified://unified\\\"}\" , then you will get the capabilities of  all the connectors that are the connection created by the user.\n\\\nIf the \"uri\" contains the scheme of the connector, for eg \"{\\\"uri\\\":\\\"CONNECTOR_SCHEME://\\\"}\" , then you will get the capabilities of that particular connector.\n\\\nIf the \"uri\" scheme contains name of the connection, for eg \"{\\\"uri\\\":\\\"unified://UNIQUE-CONNECTION-IDENTIFIER@CONNECTOR_SCHEME\\\"}\", then you will get the capabilities of that particular connector of the connection\n\n\n\\\n**The command to list the connector capabilities is**\n\n    curl -XPOST https://apiv2.unificationengine.com -u USER_ACCESSKEY:USER_ACCESSSECRET --data \"{\\\"uri\\\":\\\"CONNECTOR_SCHEME://\\\"}\" -k\n    \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connector/capabilities\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_3"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/app/connector/update" : {
+      "post" : {
+        "tags" : [ "Connector" ],
+        "summary" : "Update connector details of an application.",
+        "description" : "This endpoint will update the connector credentials like Application Key, Application Secret and optional parameters (if any) of the application. This api call should be authenticated with the key and secret of the application.\n\n\\\n**The command to update connector credentials is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/app/connector/update -u yourapikey:yourapisecret --data '{\"applicationKey\":\"APPLICATION_KEY\",\"applicationSecret\":\"APPLICATION_SECRET\", \"connectorScheme\":\"CONNECTOR_SCHEME\", \"optionalParameters\":{\"OPTIONAL_PARAMETR_KEY\":\"OPTIONAL_PARAMETR_VALUE\"}'\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/app/connector/update\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/connectorUpdateMessage"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/add" : {
+      "post" : {
+        "tags" : [ "Connection" ],
+        "summary" : "Add connection.",
+        "description" : "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like Facebook, Twitter etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n| Connector     | Token                                                             | Secret   | Params                                                                                                                                                                                                                                                                          |\n|-------------  |-----------------------------------------------------------------  |--------  |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  |\n| APNS    | yes  (APPLICATION-BUNDLE-ID)                                                           | no  |  no                                                                                  \n| BBM    | yes  (USER_BBMID)                                                           | no  |  bbm_id (bbm_id=BOT_BBMID)\n| Facebook    | yes                                                             | no  |  account_id  (account_id=FACEBOOK_ACCOUNT_ID)                                                                                                                                                                                                                                                                |\n| Fbmessenger | yes                                                             | no  | user_id (account_id=FBMESSENGER_USER_ID)                                                                                                                                                                                                                                                                         |\n| Fbworkplace | yes                                                             | no  | no                                                                                                                                                                                                                                                                            |\n| FCM | no                                                             | no  | no                                                                                                                                                                                                                                                                            |\n| Googleplus  | yes                                                             | no  | id, refresh_token and is_profile (id=PAGE_ID&refresh_token=REFRESH_TOKEN&is_profile=false)                                                                                                                                                                                    |\n| Instagram   | yes                                                             | no  | username and password (username=LOGIN_USER_NAME and password=LOGIN_USER_PASSWORD)                                                                                                                                                                                             |\n| Kakaostory  | yes                                                             | no  | refresh_token (refresh_token=REFRESH_TOKEN)                                                                                                                                                                                                                                   |\n| Kik         | yes (KIK_BOT_NAME:ACCESS_TOKEN)                                 | no  | (username=KIK_USER_NAME)                                                                                                                                                                                                                                                      |\n| Line        | yes                                                             | no  | no                                                                                                                                                                                                                                                                            |\n| Linkedin    | yes                                                             | no  | id and is_profile (for adding a user connection id=PROFILE_ID&is_profile=true and for adding page connection id=PAGE_ID&is_profile=false)                                                                                                                                     |\n| Pinterest   | yes                                                             | no  | (id, is_profile and username (for adding a user connection id=PROFILE_ID&is_profile=true&username=USER_NAME and for adding board id=BOARD_ID&is_profile=false&username=USER_NAME&profile_id=PROFILE_ID&connection_id=PINTEREST_PROFILE_CONNECTION_NAME&board_name=BOARD_NAME) |\n| Sendgrid    | yes                                                             | no  | no                                                                                                                                                                                                                                                                            |\n| Skype       | yes                                                             | no  | user_id (user_id=SKYPE_USER_ID)                                                                                                                                                                                                                                     |\n| SMS         | yes                                                             | yes | phone_number (phone_number= +PHONE_NUMBER_WITH_COUNTRY_CODE)                                                                                                                                                                                                                  |\n| Smtp        | yes (EMAIL_ID:PASSWORD@HOST:PORT)                                | no  | no                                                                                                                                                                                                                                                                            |\n| Telegram    | yes                                                             | no  | phone_number,user_id (phone_number= +PHONE_NUMBER_WITH_COUNTRY_CODE&user_id=TELEGRAM_USER_ID)                                                                                                                                                                                                                  |\n| Threema     | yes (THREEMA_ID:API_SECRET[seperated by &#160; pipe]PRIVATE_KEY_AS_HEX) &#160; | yes | (username=THREEMA USER_NAME)                                                                                                                                                                                                                                                  |\n| Tumblr      | yes                                                             | yes | no                                                                                                                                                                                                                                                                            |\n| Twitter     | yes                                                             | yes | username (username=TWITTER HANDLE/USER_NAME)                                                                                                                                                                                                                                  |\n| Viber       | yes (SERVICE_ID)                                                | no  | phone_number (phone_number= PHONE_NUMBER_WITH_COUNTRY_CODE)                                                                                                                                                                                                                   |\n| ViberPA     | yes                                                             | no  | phone_number user_id(phone_number= +PHONE_NUMBER_WITH_COUNTRY_CODE&user_id=ViberPA_USER_ID)                                                                                                                                                                                                                  |\n| WeChat      | yes                                                             | yes | phone_number, user_id, token_created_time (phone_number= +PHONE_NUMBER_WITH_COUNTRY_CODE&token_created_time=yyyy-MM-ddTHH:mm:ssZ&user_id=WECHAT_USER_ID)                                                                                                                                                      |\n| Weibo       | yes                                                             | no  | id & is_profile (id=PROFILE_ID&is_profile=true)                                                                                                                                                                                                                               |\n| Whatsapp    | yes (PHONE_NUMBER_WITH_COUNTRY_CODE)                            | no  | no                                                                                                                                                                                                                                                                            |\n| WhatsAppSandbox | &#160; yes (PHONE_NUMBER_WITH_COUNTRY_CODE)                            | no  | no                                                                                                                                                                                                                                                                            |\n| Xing        | yes                                                             | yes | no                                                                                                                                                                                                                                                                            |\n| Zalo        | yes|yes|user_id (user_id=Zalo_USER_ID)\n<br>\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\nFor eg: twitter://encodeURIComponent(access_token):encodeURIComponent(secret)@twitter.com?username=encodeURIComponent(TWITTER_HANDLE).\n\\\nThe uri parts decoding should be handled in the connector for each api request.\nFor eg: twitter://decodeURIComponent(access_token):decodeURIComponent(secret)@twitter.com?username=decodeURIComponent(TWITTER_HANDLE).\n\\\n**The command to add a connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"CONNECTOR_SCHEME://EMAIL_ADDRESS:PASSWORD@SMTP_HOST:SMTP_PORT\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/add\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_1"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/info" : {
+      "post" : {
+        "tags" : [ "Connection" ],
+        "summary" : "Connection info",
+        "description" : "This endpoint will list information about the connectors. This api call should be authenticated with the key and secret of the user.\n\n  \\\n**The command to list the connection details is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/info -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"unified://UNIQUE_CONNECTION_IDENTIFIER\"}' -k      \n\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/info\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_2"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/refresh" : {
+      "post" : {
+        "tags" : [ "Connection" ],
+        "summary" : "Connection refresh",
+        "description" : "In some services the access token has a short lifespan and another api has to be made to get a long lifespan access token. For example, Facebook first gives an access token with a short lifespan. Once we refresh the api access token, we will get another access token with a longer life. This api call should be authenticated with the key and secret of the user.\n\n \\\n**The command to refersh the connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/refresh  -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"unified://UNIQUE_CONNECTION_IDENTIFIER\"}' -k        \n\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/refresh\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_3"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/remove" : {
+      "post" : {
+        "tags" : [ "Connection" ],
+        "summary" : "Remove connection",
+        "description" : "This endpoint will remove a connection of a user. This api call should be authenticated with the key and secret of the user.\n\n\\\n**The command to remove the connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/remove  -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k  \n    \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/remove\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_4"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/list" : {
+      "post" : {
+        "tags" : [ "Connection" ],
+        "summary" : "List connection",
+        "description" : "This endpoint will list all the connections of the user. This api call should be authenticated with the key and secret of the user.\n\n  \\\n**The command to list the connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/list  -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{}' -k       \n\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/list\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : " ",
+          "description" : " ",
+          "required" : false,
+          "schema" : {
+            "type" : "object"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_4"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/message/send" : {
+      "post" : {
+        "tags" : [ "Messages" ],
+        "summary" : "Send Message",
+        "description" : "This endpoint will send a message to services like Twitter, Facebook etc. It's possible to send messages to multiple services using a single api call. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts are image_link, body, link, link_description, link_title, tags and image\n\\\nThe contentType's that are supported by UE are listed below\n\n1. text/plain\n2. text/html\n3. image/jpg\n4. image/png\n5. image/gif\n6. binary\n7. video\n\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\\\n**The steps for sending messages**\n\\\nFirst we have to create a user using UE_APPLICATIONKEY and UE_APPLICATIONSECRET.\n\\\n**The command for creating user is** \n\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/user/create -u UE_APPLICATIONKEY:UE_APPLICATIONSECRET –data '{}' -k\n\n\\\n**Response data**: {\"status\":200,\"info\":\"200 OK\",\"uri\":\" user://USER_ACCESSKEY:USER_ACCESSSECRET\"}\n\\\nFor any further requests, the USER_ACCESSKEY and USER_ACCESSSECRET from the response of the above command should be used.\n\\\n**The command for creating a smtp connection**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET –data '{\"uri\":\"UE_SMTP_CONNECTOR_SCHEME: //EMAIL_ADDRESS: PASSWORD@SMTP_HOST:SMTP_PORT\", \"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n\\\nFor gmail connection we have to enable less secure applications access in gmail. https://www.google.com/settings/security/lesssecureapps\n\\\n**The command for creating facebook connection**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET –data '{\"uri\":\"UE_FB_CONNECTOR_SCHEME: //FACEBOOK_ACCESS_TOKEN@facebook.com\", \"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n\\\nIf you are using a connector that already exists in UE, you can get UE_SMTP_CONNECTOR_SCHEME, UE_FB_CONNECTOR_SCHEME etc from \"Scheme to be used in the API\", from the connector details in application.\n\\\n![Twitter Image](https://docs.unificationengine.com/images/connectorDetails.png)\n\\\nPlease replace the above uri parameters with your own details. The \"name\" parameter should be unique. This will be used to identify the connection on execution of other commands like \"message/send\", \"connection/info\" etc.\n\\\n**The command for sending emails**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/message/send –data \"{ \\\"message\\\": { \\\"receivers\\\": [{\\\"name\\\": \\\"TO_NAME \\\", \\\"address\\\": \\\"TO_EMAILADDRESS\\\" , \\\"Connector\\\": \\\"UNIQUE_CONNECTION_IDENTIFIER\\\", \\\"type\\\": \\\"to\\\"}],\\\"sender\\\": {\\\"address\\\": \\\"EMAIL_ADDRESS\\\"},\\\"subject\\\":\\\"Hello\\\",\\\"parts\\\": [{\\\"id\\\": \\\"1\\\",\\\"contentType\\\": \\\"text/plain\\\", \\\"data\\\":\\\"Hi welcome to UE\\\" ,\\\"size\\\": 100,\\\"type\\\": \\\"body\\\",\\\"sort\\\":0}]}}\" -u USER_ACCESSKEY:USER_ACCESSSECRET -k\n\\\nIn twitter connector for a direct message to be sent, the receiver address parameter should be the twitter handle and for a tweet to be sent to the user's stream, the receiver address parameter can be omitted or set as null/empty.\n\nWhatsapp connector can send text, image, file, hsm, audio, video, location and contacts type messages.\nThe type of  the message as follows\ntype | value \ntext | body\nimage| image_link\naudio| audio_link\ndocument| file\nhsm | template\nlocation | location\ncontacts | contacts\n\nA whatsapp text message can be a maximum of 4096 characters long.\n\n\n\n\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/message/send\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/sendMessage"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_5"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/message/retrieve" : {
+      "post" : {
+        "tags" : [ "Messages" ],
+        "summary" : "Retrieve message",
+        "description" : "This endpoint will retrieve the messages from the services like twitter, whatsapp.\n\nFor retrieving a single message, the user should fetch the messages and save thde details in application db or local storage for further use.\n  \\\nFor saving message details, following parameters should be passed in api uri - unified://CONNECTION_IDENTIFIER/FOLDER_NAME header - true and entriesperpage\n  \\\nFor fetching single message the uri param as follows unified://CONNECTION_IDENTIFIER/FOLDER_NAME/ MESSAGE_ID\n  \\\nThis api call should be authenticated with the key and secret of the user.\n\n   \\\n**The command to retrive the message is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/message/retrieve -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"unified://UNIQUE_CONNECTION_IDENTIFIER\"}' -k   \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/message/retrieve\n\n<br>\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/retrieveMessage"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/retrieveMessageResponse"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/message/status" : {
+      "post" : {
+        "tags" : [ "Messages" ],
+        "summary" : "Change message status",
+        "description" : "This endpoint will change the status of the message.\n\n\\\nFor changing the message status the uri param as follows unified://CONNECTION_IDENTIFIER?messageId=MESSAGE_ID\n  \\\nThis api call should be authenticated with the key and secret of the user.\n\n   \\\n**The command to change the status of the message is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/message/status -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"message\":[{\"uri\":\"unified://CONNECTION_IDENTIFIER?messageId=MESSAGE_ID\", \"status\":\"read\"}]}' -k   \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/message/status\n\n<br>\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/statusMessage"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A User object",
+            "schema" : {
+              "$ref" : "#/definitions/successMessage"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/add#IoT Connector" : {
+      "post" : {
+        "tags" : [ "IoT Connector" ],
+        "summary" : "Add connection.",
+        "description" : "The api call which is used for adding  IoT device is \"/v2/connection/add\". This api call should be authenticated with the key and secret of the user.\n\n# Add connection uri details\n\n| Connector     | Token                                                             | Secret   | Params                                                                                                                                                                                                                                                                          |\n|-------------  |-----------------------------------------------------------------  |--------  |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  |\n| Arlo  | yes   (device_id)                                                          | yes (access_token)  | refresh_token, userId, serialNumber, xcloudId, encodedUserName and encodedPassword   |\n| BSH | yes  (device_id)                                                           | yes (access_token) | refresh_token, userid, device_category and device_type                                                                                                                                                                                                                                           |\n| BroadLink | yes  (access_token)                                                           | no | refresh_token, userid, device_type                                                                                                                                                                         \n|\n| Lifx  | yes   (device_id)                                                          | yes (access_token)  | refresh_token  |\n| Lightify   | yes  (device_id)                                                           | yes (access_token)  | refresh_token                                                                                                                                                                                 |\n| Nest  | yes   (device_id)                                                          | yes (access_token)  | device_category and device_type  |\n| Netatmo  | yes   (device_id)                                                          | yes (access_token)  | refresh_token  |\n| PhilipsHue  | yes  (device_id)                                                           | yes (access_token)  | refresh_token, bridge_id, user_id and device_id                                                                                                                                                                                    |\n| Samsung    | yes   (device_id)                                                          | yes (access_token)  |  refresh_token, userid, device_category and device_type                                                                                                                                                                                                                                                                |\n| XDK | yes  (device_id)                                                           | yes(access_token)  | user and pass                                                                                                                                                                                                                                            |\n\n\n\n\n<br>\nThe params has to be appended as query string at the end of uri.\n\\\nWhile adding a connection, the uri parts like device access token, id and query parameter values should be encoded in the application.\nFor eg: samsung://encodeURIComponent(device_id):encodeURIComponent(access_token)@samsung.com?refresh_token=encodeURIComponent(refresh_token)&userid=encodeURIComponent(userid)&device_category =encodeURIComponent(device_category)&device_type=encodeURIComponent(device_type).\n\\\nThe uri parts decoding should be handled in the connector for each api request.\nFor eg: samsung://decodeURIComponent(device_id):decodeURIComponent(access_token)@samsung.com?refresh_token=decodeURIComponent(refresh_token)&userid=decodeURIComponent(userid)&device_category =decodeURIComponent(device_category)&device_type=decodeURIComponent(device_type).\n\\\n**The command to add a connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"CONNECTOR_SCHEME://DEVICE_ID:DEVICE_ACCESS_TOKEN@CONNECTOR_SCHEME.com?refresh_token=DEVICE_REFRESH_TOKEN&device_category=DEVICE_CATEGORY&device_type=DEVICE_TYPE\", \"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\nIn the above command, “DEVICE_CATEGORY ” is simulator or live according to the device.\n\"DEVICE_TYPE\" is type of the device, for eg: Washer, Dryer etc. \n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/add\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_5"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/device/info" : {
+      "post" : {
+        "tags" : [ "IoT Connector" ],
+        "summary" : "Connection info",
+        "description" : "This endpoint will list information about the IoT device. This api call should be authenticated with the key and secret of the user.\n\n  \\\n**The command to list the connection details is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/device/info -u USER_ACCESSKEY:USER_ACCESSSECRET --data \"{\\\"uri\\\":\\\"unified://UNIQUE_CONNECTION_IDENTIFIER\\\"}\" -k      \n\n<br>\n\n**HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/info\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_6"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_6"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "userAuth" : [ ]
+        } ]
+      }
+    },
+    "/connection/refresh#IoT Connector" : {
+      "post" : {
+        "tags" : [ "IoT Connector" ],
+        "summary" : "IoT connection refresh",
+        "description" : "In some devices the access token has a short lifespan and another api has to be made to get a new access token. Once we refresh the device access token, we will get another access token. This api call should be authenticated with the key and secret of the user.\n\n\n  \\\n **HTTP Request**\n\n    POST https://accesskey:secret@uib-api/v2/connection/refresh\n\n`Remember — the API requires authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "none",
+          "description" : "none",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/none_7"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/device/action" : {
+      "post" : {
+        "tags" : [ "IoT Connector" ],
+        "summary" : "Perform device actions",
+        "description" : "This endpoint is used to perform the device action by calling corresponding api call of the IoT device. This api call should be authenticated with the key and secret of the user.\n  \\\nThe 'action' parameter values are start, stop, effect, mode, color, duration, temperatures, setmode, operation, timestatus and settings.\n  \\\nThe 'key' parameter values in 'actiondata' are type, amount, quantity, mode, SetpointTemperatureRefrigerator, SetpointTemperatureFreezer, SuperModeFreezer, SuperModeRefrigerator, stop, start, duration, temperatures and power.\n  \\\n**Example for performing device actions with parameters**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/device/action -u USER_ACCESSKEY:USER_ACCESSSECRET --data \"{\\\"Connector\\\":\\\"UNIQUE_CONNECTION_IDENTIFIER\\\", \\\"power\\\":\\\"\\\", \\\"action\\\":\\\"start\\\", \\\"actiondata\\\": [{\\\"key\\\": \\\"type\\\", \\\"value\\\":\\\"value\\\" , \\\"unit\\\": \\\"\\\", \\\"capability\\\": \\\"\\\"},{\\\"key\\\": \\\"amount\\\", \\\"value\\\":\\\"value\\\" , \\\"unit\\\": \\\"\\\", \\\"capability\\\": \\\"\\\"},{\\\"key\\\": \\\"quantity\\\", \\\"value\\\":\\\"value\\\" , \\\"unit\\\": \\\"\\\", \\\"capability\\\": \\\"\\\"}]}\" -k\n\n\n\n\\\n**Query Parameters**\n| Parameter   | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |\n|-----------  |---------  |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  |\n| power     | null      | ''   |\n| action     | null      | setmode   |\n| actiondata | null | [{\"key\":\"mode\",\"value\":\"value\",\"unit\":\"\"}] |                                                               |\n\n\n<br>\n\n`Remember - Protect the API with authentication!`\n",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_1"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    },
+    "/device/info/image" : {
+      "post" : {
+        "tags" : [ "IoT Connector" ],
+        "summary" : "Device image",
+        "description" : "This endpoint is used to get the image of the device  by calling corresponding api call of the IoT device. This api call should be authenticated with the key and secret of the user.\n\\\n**Example for getting device image key with parameters**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/device/info/image -u USER_ACCESSKEY:USER_ACCESSSECRET  --data \"{\\\"uri\\\":\\\"unified://UNIQUE_CONNECTION_IDENTIFIER\\\"}\" -k\n\n**Response**:\n {\"Status\":{\"UNIQUE_CONNECTION_IDENTIFIER\":{\"status\":200,\"info\":\"OK\"}},\"image\":{\"UNIQUE_CONNECTION_IDENTIFIER\":[{\"id\":\"\",\"timestamp\":1510634127,\"key\":\"\"}]}}             \n \\\n**Example for getting device image key with parameters**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/device/info/image -u USER_ACCESSKEY:USER_ACCESSSECRET --data \"{\\\"uri\\\":\\\"unified://UNIQUE_CONNECTION_IDENTIFIER/IMAGE_ID\\\"}\" -k  \n\n\n      \n**Response**:\n  {status: 200, info: 'OK', image: BASE64_IMAGE, id:IMAGE_ID}\n\n  \\\n**Query Parameters**\n\n\n| Parameter   | Default   | Description                                                                                                                     |\n|-----------  |---------  |-------------------------------------------------------------------------------------------------------------------------------  |\n| uri         | null      | unified://UNIQUE_CONNECTION_IDENTIFIER/IMAGE_ID   |\n\n\n<br>\n\n`Remember - Protect the API with authentication!`\n",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : " ",
+          "description" : " ",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ "
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Api Success",
+            "schema" : {
+              "$ref" : "#/definitions/inline_response_200_7"
+            }
+          },
+          "401" : {
+            "description" : "Authentication required!"
+          }
+        },
+        "security" : [ {
+          "appAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "appAuth" : {
+      "description" : "UnificationEngine® uses API keys to allow access to the API. You can register a new UnificationEngine® application API key at our [developer portal](https://developer.unificationengine.com/).\n\nUnificationEngine® expects for the API key and Secret to be included in all API requests to the server. The endpoint URL will look like this:\n\nhttps://yourapikey:yourapisecret@apiv2.unificationengine.com/\n\n![auth](images/applicationDetails.png)\n\n`You must replace yourapikey:yourapisecret with your personal application API key and secret that you have created in developer portal.`\n\n\n# Application Authentication\n\n Use **UnificationEngine Application Key** as *Username* and **UnificationEngine Application Secret** as *Password*\n",
+      "type" : "basic"
+    },
+    "userAuth" : {
+      "description" : "# User Authentication\n\nUse **User accesskey** as *Username* and **User Secret** as *Password*\n",
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "sendMessage" : {
+      "type" : "object",
+      "required" : [ "message" ],
+      "properties" : {
+        "message" : {
+          "$ref" : "#/definitions/sendMessage_message"
+        }
+      },
+      "example" : {
+        "message" : {
+          "sender" : {
+            "address" : "test"
+          },
+          "receivers" : [ {
+            "name" : "Me",
+            "address" : "test.test",
+            "Connector" : "facebook"
+          } ],
+          "subject" : "test",
+          "parts" : [ {
+            "id" : "0",
+            "contentType" : "text/plain",
+            "size" : 2211,
+            "type" : "image_link",
+            "name" : "file name",
+            "data" : "http://www.hd-wallpapersdownload.com/upload/bulk-upload/desktop-pictures-of-cute-kittens-and-cats-wallpaper.jpg",
+            "sort" : 1
+          }, {
+            "id" : "1",
+            "contentType" : "text/plain",
+            "data" : "test",
+            "size" : 100,
+            "type" : "body",
+            "sort" : 0
+          }, {
+            "id" : "2",
+            "contentType" : "text/plain",
+            "data" : "description2",
+            "size" : 100,
+            "type" : "link_description",
+            "sort" : 2
+          }, {
+            "id" : "3",
+            "contentType" : "text/plain",
+            "data" : "title2",
+            "size" : 100,
+            "type" : "link_title",
+            "sort" : 3
+          }, {
+            "id" : "4",
+            "contentType" : "text/plain",
+            "data" : "https://www.test.com",
+            "size" : 100,
+            "type" : "link",
+            "sort" : 4
+          } ]
+        }
+      }
+    },
+    "retrieveMessage" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "entriesperpage" : {
+          "type" : "number",
+          "example" : 2.0
+        },
+        "startindex" : {
+          "type" : "string",
+          "example" : "10"
+        },
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://twitter"
+        },
+        "header" : {
+          "type" : "boolean",
+          "example" : true
+        }
+      }
+    },
+    "retrieveMessageResponse" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "messages" : {
+          "type" : "string",
+          "example" : "",
+          "description" : "Messages description"
+        }
+      }
+    },
+    "statusMessage" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "array",
+          "description" : "Array of messages",
+          "items" : {
+            "$ref" : "#/definitions/statusMessage_message"
+          }
+        }
+      }
+    },
+    "connectorUpdateMessage" : {
+      "type" : "object",
+      "properties" : {
+        "applicationKey" : {
+          "type" : "string",
+          "example" : "APPLICATION_KEY"
+        },
+        "applicationSecret" : {
+          "type" : "string",
+          "example" : "APPLICATION_SECRET"
+        },
+        "connectorScheme" : {
+          "type" : "string",
+          "example" : "CONNECTOR_SCHEME"
+        },
+        "optionalParameters" : {
+          "$ref" : "#/definitions/connectorUpdateMessage_optionalParameters"
+        }
+      }
+    },
+    "successMessage" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        }
+      }
+    },
+    "inline_response_200" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "uri" : {
+          "type" : "string",
+          "example" : "user://USER_ACCESSKEY:USER_ACCESSSECRET",
+          "description" : "User details"
+        }
+      }
+    },
+    "uri" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "user://e9759590-54ef-4cd3-a01c-cb2241ddd812:1aee1a25-e0c4-4036-a8fd-4d41adc8611b@"
+        }
+      }
+    },
+    "inline_response_200_1" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        }
+      }
+    },
+    "inline_response_200_2_users" : {
+      "type" : "object",
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "description" : "The uri of user"
+        }
+      }
+    },
+    "inline_response_200_2" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "users" : {
+          "type" : "array",
+          "example" : [ {
+            "uri" : "user://e9759590-54ef-4cd3-a01c-cb2241ddd812@"
+          } ],
+          "description" : "Array of users",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_2_users"
+          }
+        }
+      }
+    },
+    "none" : {
+      "type" : "object",
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://twitter"
+        }
+      }
+    },
+    "inline_response_200_3_capabilities" : {
+      "type" : "object",
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "description" : "The uri of user"
+        }
+      },
+      "description" : "List of capabilities of the connector",
+      "example" : "[{\"Twitter\":{\"capabilities\":{\"binary\":true,\"html\":true,\"image\":true,\"plain\":true,\"push\":true,\"receiving\":true,\"refresh\":true,\"sending\":true,\"video\":true},\"capabilitylimits\":{\"plain_max_chars\":140},\"devicecapabilities\":{\"power\":true}}}]"
+    },
+    "inline_response_200_3" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "capabilities" : {
+          "$ref" : "#/definitions/inline_response_200_3_capabilities"
+        }
+      }
+    },
+    "none_1" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "facebook://CAADJsdsdds00BAAPXf@facebook.com"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "facebook"
+        }
+      }
+    },
+    "none_2" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://facebook"
+        }
+      }
+    },
+    "none_3" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://facebook"
+        }
+      }
+    },
+    "none_4" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "example" : "facebook"
+        }
+      }
+    },
+    "inline_response_200_4" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "connections" : {
+          "type" : "object",
+          "example" : {
+            "facebook" : {
+              "uri" : "facebook://CAADJsdsdds00BAAPX5siAhzZCUZBOGD2pFJngc2wGDb7RRyUzvYVe5EAT5fUvZAmB4OYpmcPPiHzsJJ8zLUYTgGhjBKOOsa0wj5kTBXWXWKOxrCrGp4uLL48CkkMNjmmTPlEirOOwSlKiX4VV2yfmoRgDZBQ9MsFC5yZC4xDL9YrdedTZBQpFN2@facebook.com"
+            }
+          },
+          "description" : "Connections list",
+          "properties" : { }
+        }
+      }
+    },
+    "inline_response_200_5" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "URIs" : {
+          "type" : "array",
+          "description" : "Send list",
+          "items" : {
+            "type" : "string",
+            "example" : "facebook://facebook.com/648738109689982977"
+          }
+        }
+      }
+    },
+    "none_5" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "CONNECTOR_SCHEME://DEVICE_ID:DEVICE_ACCESS_TOKEN@CONNECTOR_SCHEME.com?refresh_token=DEVICE_REFRESH_TOKEN&device_category=DEVICE_CATEGORY&device_type=DEVICE_TYPE"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "deviceConnection"
+        }
+      }
+    },
+    "none_6" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://facebook"
+        }
+      }
+    },
+    "inline_response_200_6_data" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "DEVICE_ID"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "DEVICE_NAME"
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "DEVICE_TYPE"
+        },
+        "subtype" : {
+          "type" : "string",
+          "example" : "DEVICE_SUB_TYPE"
+        },
+        "model" : {
+          "type" : "string",
+          "example" : "DEVICE_MODEL"
+        },
+        "mode" : {
+          "type" : "string",
+          "example" : "DEVICE_MODE"
+        },
+        "manufacturer" : {
+          "type" : "string",
+          "example" : "MANUFACTURER"
+        },
+        "connected" : {
+          "type" : "boolean",
+          "example" : true
+        }
+      }
+    },
+    "inline_response_200_6_actions_actionData" : {
+      "type" : "object",
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "example" : ""
+        },
+        "value" : {
+          "type" : "string",
+          "example" : ""
+        },
+        "unit" : {
+          "type" : "string",
+          "example" : ""
+        }
+      }
+    },
+    "inline_response_200_6_actions" : {
+      "type" : "object",
+      "properties" : {
+        "power" : {
+          "type" : "string",
+          "example" : "POWER_STATUS"
+        },
+        "action" : {
+          "type" : "string",
+          "example" : "DEVICE_ACTION"
+        },
+        "actionData" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_6_actions_actionData"
+          }
+        }
+      }
+    },
+    "inline_response_200_6_device" : {
+      "type" : "object",
+      "properties" : {
+        "data" : {
+          "$ref" : "#/definitions/inline_response_200_6_data"
+        },
+        "actions" : {
+          "$ref" : "#/definitions/inline_response_200_6_actions"
+        }
+      }
+    },
+    "inline_response_200_6" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "device" : {
+          "type" : "array",
+          "description" : "IoT  Connections",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_6_device"
+          }
+        }
+      }
+    },
+    "none_7" : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://UNIQUE_CONNECTION_IDENTIFIER"
+        }
+      }
+    },
+    " " : {
+      "type" : "object",
+      "required" : [ "uri" ],
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://UNIQUE_CONNECTION_IDENTIFIER/IMAGE_ID"
+        }
+      }
+    },
+    "inline_response_200_7" : {
+      "type" : "object",
+      "properties" : {
+        "status" : {
+          "type" : "integer",
+          "example" : 200,
+          "description" : "Status of Api"
+        },
+        "info" : {
+          "type" : "string",
+          "example" : "200 OK",
+          "description" : "Info about status"
+        },
+        "image" : {
+          "type" : "string",
+          "example" : "BASE64_IMAGE",
+          "description" : "base64 image"
+        }
+      }
+    },
+    "sendMessage_message_receivers" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "Connector" : {
+          "type" : "string"
+        }
+      }
+    },
+    "sendMessage_message_parts" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "contentType" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "string"
+        },
+        "size" : {
+          "type" : "integer"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "sort" : {
+          "type" : "number"
+        }
+      }
+    },
+    "sendMessage_message" : {
+      "type" : "object",
+      "properties" : {
+        "receivers" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/sendMessage_message_receivers"
+          }
+        },
+        "subject" : {
+          "type" : "string"
+        },
+        "parts" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/sendMessage_message_parts"
+          }
+        }
+      }
+    },
+    "statusMessage_message" : {
+      "type" : "object",
+      "properties" : {
+        "uri" : {
+          "type" : "string",
+          "example" : "unified://CONNECTION_IDENTIFIER?messageId=MESSAGE_ID",
+          "description" : "The uri of messages"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "read",
+          "description" : "Status of messages"
+        }
+      }
+    },
+    "connectorUpdateMessage_optionalParameters" : {
+      "type" : "object",
+      "properties" : {
+        "OPTIONAL_PARAMETR_KEY" : {
+          "type" : "string",
+          "example" : "OPTIONAL_PARAMETR_VALUE",
+          "description" : "optional parameters"
+        }
+      }
+    }
+  },
+  "responses" : {
+    "UnauthorizedError" : {
+      "description" : "Authentication required!"
+    },
+    "successMessage" : {
+      "description" : "A User object",
+      "schema" : {
+        "$ref" : "#/definitions/successMessage"
+      }
+    },
+    "retrieveMessage" : {
+      "description" : "Api Success",
+      "schema" : {
+        "$ref" : "#/definitions/retrieveMessageResponse"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.submitButton{
+    width: 193px;
+    height: 40px;
+    color: white;
+    background-color: #318cf1;
+    border: 0px;
+    border-radius: 27px;
+    margin-top: 12px;
+}
+
+.UELogo{
+    width: 240px;
+    height: auto;
+    float: left;
+}

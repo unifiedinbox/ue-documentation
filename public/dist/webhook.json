@@ -1,0 +1,749 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "version": "1.0.0",
+    "title": "Webhook Payload"
+  },
+  "host": "webhook.site",
+  "basePath": "/fbb57f4e-4001-42bb-b63a-c1ac08728a53",
+  "tags": [
+    {
+      "name": "Webhooks",
+      "description": "Webhook Payloads"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/#text": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Text message webhook",
+        "description": "The application will receive the below text details in the webhook URL.\n\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/textWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#image": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Image webhook",
+        "description": "The application will receive the below image details in the webhook URL.\n\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/imageWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#audio": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Audio webhook",
+        "description": "The application will receive the below audio details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/audioWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#video": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Video webhook",
+        "description": "The application will receive the below video details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/videoWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#location": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Location webhook",
+        "description": "The application will receive the below location details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/locationWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#status": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Status webhook",
+        "description": "When  you receive the status of a message sent, the attachmenttype  will be always  “status”. You can use  this to check if it is a message from a user or a notification status from WhatsApp.\nThe attachment parameter will have its status - sent/delivered/read/failed/deleted.\n\nsent/delivered/read/failed - This is the status of the message sent by your business to the user.\n\ndeleted - This is the status received when a message the user sent to your business was deleted by the user for everyone(You only have about an hour after you've sent a message to request to Delete for Everyone)\n\nThe id of the message will be in the originalEvent.\nThe application will receive the below status details in the webhook URL.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/statusWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#listpicker": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "ListPicker webhook",
+        "description": "The application will receive the below list picker details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/listpickerWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#replyButton": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "ListPicker webhook",
+        "description": "The application will receive the below text details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/replyButtonWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/#replyMessage": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "ListPicker webhook",
+        "description": "The application will receive the below text details in the webhook URL.\nIn webhook body data->parts->originalEvent will be a stringified object.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/replyMessageWebhook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "textWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "WEBHOOK_MESSAGE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "WEBHOOK_MESSAGE",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"profile\":{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"text\":{\"body\":\"WEBHOOK_MESSAGE\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "imageWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "MEDIA_ID",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "MEDIA_ID",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"profile\":{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"image\":{\"id\":\"MEDIA_ID\",\"mime_type\":\"mime_type\",\"sha256\":\"sha256\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "audioWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "MEDIA_ID",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "MEDIA_ID",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"profile\":{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"voice\":{\"id\":\"MEDIA_ID\",\"mime_type\":\"mime_type\",\"sha256\":\"sha256\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "videoWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "MEDIA_ID",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "MEDIA_ID",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"profile\":{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"video\":{\"id\":\"MEDIA_ID\",\"mime_type\":\"mime_type\",\"sha256\":\"sha256\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "locationWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "geo:LATITUDE:LONGITUDE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "geo:LATITUDE:LONGITUDE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "geo:LATITUDE:LONGITUDE",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"location\":{\"latitude\":\"LATITUDE\",\"longitude\":\"LONGITUDE\"},profile:{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "statusWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "STATUS_OF_MESSAGE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "STATUS_OF_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "STATUS_OF_MESSAGE",
+              "uri": "",
+              "originalEvent": "{\"recipient_id\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"timestamp\":\"TIME_STAMP\",\"status\":\"STATUS_OF_MESSAGE\"}"
+            }
+          ]
+        }
+      }
+    },
+    "listpickerWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "WEBHOOK_MESSAGE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "WEBHOOK_MESSAGE",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"context\":{\"from\":\"WHATSAPP_BOT_NUMBER\",\"id\":\"MESSAGE_ID_OF_CONTEXT_MESSAGE\"},profile:{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\",\"interactive\":{list_reply:{\"description\":\"SELECTED_ITEM_DESCRIPTION\",\"id\":\"SELECTED_ITEM_ID\",\"title\":\"SELECTED_ITEM_TITLE\"},\"type\":\"list_reply\"}}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "replyButtonWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "WEBHOOK_MESSAGE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "WEBHOOK_MESSAGE",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"context\":{\"from\":\"WHATSAPP_BOT_NUMBER\",\"id\":\"MESSAGE_ID_OF_CONTEXT_MESSAGE\"},profile:{\"name\":\"WHATSAPP_PROFILE_NAME\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\",\"interactive\":{list_reply:{\"description\":\"SELECTED_ITEM_DESCRIPTION\",\"id\":\"SELECTED_ITEM_ID\",\"title\":\"SELECTED_ITEM_TITLE\"},\"type\":\"list_reply\"}}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "replyMessageWebhook": {
+      "type": "object",
+      "required": [
+        "data",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/textWebhook_data"
+        }
+      },
+      "example": {
+        "uri": "APPLICATION_WEBHOOK_URL",
+        "data": {
+          "messagepreview": "WEBHOOK_MESSAGE",
+          "connectionname": "UNIQUE_CONNECTION_IDENTIFIER",
+          "uri": "whatsappofficial://UNIQUE_CONNECTION_IDENTIFIER@APPLICATION_ID/CHANNEL_NAME",
+          "receiveraddress": "PHONE_NUMBER_WITH_COUNTRY_CODE",
+          "senderaddress": "WHATSAPP_BOT_NUMBER",
+          "attachment": {
+            "value": "WEBHOOK_MESSAGE"
+          },
+          "timestamp": "TIME_STAMP",
+          "attachmenttype": "WEBHOOK_MESSAGE_TYPE",
+          "webhookaccesskey": "APPLICATION_ID",
+          "parts": [
+            {
+              "contentType": "WEBHOOK_MESSAGE_TYPE",
+              "data": "WEBHOOK_MESSAGE",
+              "uri": "",
+              "originalEvent": "{\"from\":\"PHONE_NUMBER_WITH_COUNTRY_CODE\",\"id\":\"MESSAGE_ID\",\"context\":{\"from\":\"WHATSAPP_BOT_NUMBER\",\"id\":\"MESSAGE_ID_OF_CONTEXT_MESSAGE\"},profile:{\"name\":\"WHATSAPP_PROFILE_NAME\"},text:{\"body\":\"WEBHOOK_MESSAGE\"},\"timestamp\":\"TIME_STAMP\",\"type\":\"WEBHOOK_MESSAGE_TYPE\"}"
+            }
+          ],
+          "sender": "whatsappofficial://WHATSAPP_BOT_NUMBER@",
+          "receiver": "whatsappofficial://PHONE_NUMBER_WITH_COUNTRY_CODE@whatsapp.com?name=WHATSAPP_PROFILE_NAME"
+        }
+      }
+    },
+    "successMessage": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "inline_response_200": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "textWebhook_data_attachment": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "textWebhook_data_parts": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "originalEvent": {
+          "type": "string"
+        }
+      }
+    },
+    "textWebhook_data": {
+      "type": "object",
+      "properties": {
+        "messagepreview": {
+          "type": "string"
+        },
+        "connectionname": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "receiveraddress": {
+          "type": "string"
+        },
+        "senderaddress": {
+          "type": "string"
+        },
+        "attachment": {
+          "$ref": "#/definitions/textWebhook_data_attachment"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "attachmenttype": {
+          "type": "string"
+        },
+        "webhookaccesskey": {
+          "type": "string"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/textWebhook_data_parts"
+          }
+        },
+        "sender": {
+          "type": "string"
+        },
+        "receiver": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "responses": {
+    "UnauthorizedError": {
+      "description": "Authentication required!"
+    },
+    "successMessage": {
+      "description": "A User object",
+      "schema": {
+        "$ref": "#/definitions/successMessage"
+      }
+    }
+  }
+}

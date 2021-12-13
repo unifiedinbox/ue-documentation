@@ -1,0 +1,857 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Line API! You can use our API to access UnificationEngine® API endpoints, which can communicate with line. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "version": "1.0.0",
+    "title": "Line"
+  },
+  "host": "apiv2.unificationengine.com",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "Connection",
+      "description": "Add Connection"
+    },
+    {
+      "name": "Send Messages",
+      "description": "Messaging using UnificationEngine®"
+    },
+    {
+      "name": "Media retrieve",
+      "description": "Retrieve media using UnificationEngine®"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/connection/add": {
+      "post": {
+        "tags": [
+          "Connection"
+        ],
+        "summary": "Add connection.",
+        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n__The params has to be appended as query string at the end of uri.__\n\nPlease note that the LINE_USER_ID has to be url  encoded.\n\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\nThe uri parts decoding should be handled in the connector for each api request.\n\n\\\n**The command to add a line connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"line://LINE_USER_ID@line.com\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/none"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_1"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#text": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message Text",
+        "description": "This endpoint will send a text message to Line Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageText"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#image": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Image",
+        "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageImage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#imagewithtext": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Image  with text",
+        "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageImagewithtext"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#Audio": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Audio",
+        "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageAudio"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#Video": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Video",
+        "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageVideo"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#Location": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Location",
+        "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageLocation"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#Button": {
+      "post": {
+        "tags": [
+          "Send Messages"
+        ],
+        "summary": "Send Message - Button",
+        "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/sendMessageButton"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/inline_response_200_2"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/retrieve": {
+      "post": {
+        "tags": [
+          "Media retrieve"
+        ],
+        "summary": "Retrieve image data",
+        "description": "This endpoint will retrieve the image from the service.\n\nFor retrieving a single message, the user should fetch the messages and save thde details in application db or local storage for further use.\n  \\\nFor saving message details, following parameters should be passed in api uri - unified://CONNECTION_IDENTIFIER/FOLDER_NAME header - true and entriesperpage\n  \\\nFor fetching single message the uri param as follows unified://CONNECTION_IDENTIFIER/FOLDER_NAME/ MESSAGE_ID\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "none",
+            "description": "none",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/retrieveMessage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/retrieveMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "userAuth": {
+      "description": "# User Authentication\n\nUse **User accesskey** as *Username* and **User Secret** as *Password*\n",
+      "type": "basic"
+    }
+  },
+  "definitions": {
+    "sendMessageText": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageText_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "text/plain",
+              "data": "test",
+              "size": 4,
+              "type": "body",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageImage": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageText_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "image/jpeg",
+              "size": 36,
+              "type": "image_link",
+              "name": "file name",
+              "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageImagewithtext": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageImagewithtext_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "size": 50,
+              "type": "image_link",
+              "name": "file name",
+              "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+              "sort": 0
+            },
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "test",
+              "size": 4,
+              "type": "body",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageAudio": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageText_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "CONTENT_TYPE",
+              "data": "AUDIO_LINK",
+              "size": 2500,
+              "name": "FILE_NAME",
+              "type": "audio_link",
+              "sort": 0
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageVideo": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageText_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "CONTENT_TYPE",
+              "data": "VIDEO_LINK",
+              "size": "VIDEO_LINK_SIZE",
+              "type": "video_link",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageLocation": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageText_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "application/json",
+              "data": "{ \"longitude\": LONGITUDE, \"latitude\": LATITUDE, \"name\": \"LOCATION_NAME\", \"address\": \"LOCATION_ADDRESS\"}",
+              "size": 100,
+              "type": "location",
+              "sort": 0
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageButton": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessageImagewithtext_message"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "LINE_USER_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "MESSAGE_BODY",
+              "size": 1000,
+              "type": "body",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": 1000,
+              "type": "button/postback",
+              "sort": 1
+            },
+            {
+              "id": "3",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": 1000,
+              "type": "button/postback",
+              "sort": 2
+            },
+            {
+              "id": "4",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": 1000,
+              "type": "button/postback",
+              "sort": 3
+            }
+          ]
+        }
+      }
+    },
+    "retrieveMessage": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "example": "unified://UNIQUE_CONNECTION_IDENTIFIER?messageId=MESSAGE_ID&mediaId=MEDIA_ID"
+        }
+      }
+    },
+    "retrieveMessageResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        },
+        "messages": {
+          "type": "string",
+          "example": "",
+          "description": "Messages description"
+        }
+      }
+    },
+    "successMessage": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "inline_response_200": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        },
+        "uri": {
+          "type": "string",
+          "example": "user://USER_ACCESSKEY:USER_ACCESSSECRET",
+          "description": "User details"
+        }
+      }
+    },
+    "none": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "example": "line://LINE_USER_ID@line.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "UNIQUE_CONNECTION_IDENTIFIER"
+        }
+      }
+    },
+    "inline_response_200_1": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "inline_response_200_2": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        },
+        "URIs": {
+          "type": "array",
+          "description": "Send list",
+          "items": {
+            "type": "string",
+            "example": "line://line.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
+          }
+        }
+      }
+    },
+    "sendMessageText_message_receivers": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "Connector": {
+          "type": "string"
+        }
+      }
+    },
+    "sendMessageText_message_parts": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "number"
+        }
+      }
+    },
+    "sendMessageText_message": {
+      "type": "object",
+      "properties": {
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessageText_message_receivers"
+          }
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessageText_message_parts"
+          }
+        }
+      }
+    },
+    "sendMessageImagewithtext_message": {
+      "type": "object",
+      "properties": {
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessageText_message_receivers"
+          }
+        },
+        "subject": {
+          "type": "string"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessageText_message_parts"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "UnauthorizedError": {
+      "description": "Authentication required!"
+    },
+    "successMessage": {
+      "description": "A User object",
+      "schema": {
+        "$ref": "#/definitions/successMessage"
+      }
+    },
+    "retrieveMessage": {
+      "description": "Api Success",
+      "schema": {
+        "$ref": "#/definitions/retrieveMessageResponse"
+      }
+    }
+  }
+}
