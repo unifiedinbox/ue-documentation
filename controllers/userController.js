@@ -1,9 +1,9 @@
-let webHooks = require('../public/dist/webhook.json');
-let tg = require('../public/dist/telegram.json');
-let wa = require('../public/dist/whatsapp.json');
-let ig = require('../public/dist/instagram.json');
-let line = require('../public/dist/line.json');
-let viber = require('../public/dist/viberpa.json');
+let webHooks = require('../public/webhook.json');
+let tg = require('../public/telegram.json');
+let wa = require('../public/whatsapp.json');
+let ig = require('../public/instagram.json');
+let line = require('../public/line.json');
+let viber = require('../public/viberpa.json');
 
 let CronController = {
         getJsonData:function (req, res, next) {
