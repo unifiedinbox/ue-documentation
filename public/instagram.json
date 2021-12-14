@@ -5,7 +5,7 @@
     "version": "v2",
     "title": "Instagram"
   },
-  "host": "beta-apiv2.unificationengine.com",
+  "host": "apiv2.unificationengine.com",
   "basePath": "/v2",
   "tags": [
     {
