@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® WhatsApp API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® WhatsApp API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp.\n",
     "version": "v2",
     "title": "WhatsApp"
   },
@@ -13,12 +13,16 @@
       "description": "Add Connection"
     },
     {
-      "name": "Send Messages",
+      "name": "Send messages",
       "description": "Messaging using UnificationEngine®"
     },
     {
       "name": "Media retrieve",
       "description": "Retrieve media using UnificationEngine®"
+    },
+    {
+      "name": "Status update",
+      "description": "Change WhatsApp message status"
     }
   ],
   "schemes": [
@@ -64,7 +68,7 @@
     "/message/send#text": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message Text",
         "description": "This endpoint will send a text message to WhatsApp Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n",
@@ -100,7 +104,7 @@
     "/message/send#image": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Image",
         "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n5. image/gif\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
@@ -136,7 +140,7 @@
     "/message/send#imagewithtext": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Image  with text",
         "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n5. image/gif\n\n`Remember — the API requires authentication!`\n",
@@ -172,7 +176,7 @@
     "/message/send#document": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Document",
         "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is file.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -205,10 +209,10 @@
         }
       }
     },
-    "/message/send#Audio": {
+    "/message/send#audio": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Audio",
         "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -241,10 +245,10 @@
         }
       }
     },
-    "/message/send#Video": {
+    "/message/send#video": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Video",
         "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -277,10 +281,10 @@
         }
       }
     },
-    "/message/send#Link": {
+    "/message/send#link": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Link",
         "description": "This endpoint will send a Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -313,10 +317,10 @@
         }
       }
     },
-    "/message/send#Location": {
+    "/message/send#location": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Location",
         "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -349,10 +353,10 @@
         }
       }
     },
-    "/message/send#Contact": {
+    "/message/send#contact": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Contact",
         "description": "This endpoint will send a Contact message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -385,10 +389,10 @@
         }
       }
     },
-    "/message/send#TextPickerSingle": {
+    "/message/send#textpickersingle": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - TextPickerSingle",
         "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -421,10 +425,10 @@
         }
       }
     },
-    "/message/send#TextPickerMultiple": {
+    "/message/send#textpickermultiple": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - TextPickerMultiple",
         "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -457,10 +461,10 @@
         }
       }
     },
-    "/message/send#ReplyButton": {
+    "/message/send#replybutton": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - ReplyButton",
         "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -493,10 +497,10 @@
         }
       }
     },
-    "/message/send#Template": {
+    "/message/send#template": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Template",
         "description": "This endpoint will send a template message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -568,7 +572,7 @@
     "/message/status": {
       "post": {
         "tags": [
-          "Status Update"
+          "Status update"
         ],
         "summary": "Message status change",
         "description": "When users sent a message to the WABA number,  the message status won't be changed as read(blue double tick) in WhatsApp automatically.\nAs soon the webhook receives the message, the application has to call a UE api to change the message status as read.\n",

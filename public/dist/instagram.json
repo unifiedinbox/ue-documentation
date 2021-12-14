@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® instagram API! You can use our API to access UnificationEngine® API endpoints, which can communicate with instagram. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® instagram API! You can use our API to access UnificationEngine® API endpoints, which can communicate with instagram.\n",
     "version": "v2",
     "title": "Instagram"
   },
@@ -13,7 +13,7 @@
       "description": "Add Connection"
     },
     {
-      "name": "Send Messages",
+      "name": "Send messages",
       "description": "Messaging using UnificationEngine®"
     }
   ],
@@ -60,7 +60,7 @@
     "/message/send#text": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message Text",
         "description": "This endpoint will send a text message to instagram Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\nPlease note that a message can be sent via API, only if the user has communicated to the Instagram bot in the last __24 hours__.\n\n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\n`Remember — the API requires authentication!`\n",
@@ -96,7 +96,7 @@
     "/message/send#image": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Image",
         "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
@@ -129,10 +129,10 @@
         }
       }
     },
-    "/message/send#Button": {
+    "/message/send#button": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Button",
         "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body, quickreply , header and footer.\n\\\n`Remember — the API requires authentication!`\n",

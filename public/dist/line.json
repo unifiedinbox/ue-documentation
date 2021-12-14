@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Line API! You can use our API to access UnificationEngine® API endpoints, which can communicate with line. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Line API! You can use our API to access UnificationEngine® API endpoints, which can communicate with Line.\n",
     "version": "1.0.0",
     "title": "Line"
   },
@@ -13,7 +13,7 @@
       "description": "Add Connection"
     },
     {
-      "name": "Send Messages",
+      "name": "Send messages",
       "description": "Messaging using UnificationEngine®"
     },
     {
@@ -64,7 +64,7 @@
     "/message/send#text": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message Text",
         "description": "This endpoint will send a text message to Line Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n",
@@ -100,7 +100,7 @@
     "/message/send#image": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Image",
         "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
@@ -136,7 +136,7 @@
     "/message/send#imagewithtext": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Image  with text",
         "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n\n\n`Remember — the API requires authentication!`\n",
@@ -169,10 +169,10 @@
         }
       }
     },
-    "/message/send#Audio": {
+    "/message/send#audio": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Audio",
         "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -205,10 +205,10 @@
         }
       }
     },
-    "/message/send#Video": {
+    "/message/send#video": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Video",
         "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -241,10 +241,10 @@
         }
       }
     },
-    "/message/send#Location": {
+    "/message/send#location": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Location",
         "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
@@ -277,10 +277,10 @@
         }
       }
     },
-    "/message/send#Button": {
+    "/message/send#button": {
       "post": {
         "tags": [
-          "Send Messages"
+          "Send messages"
         ],
         "summary": "Send Message - Button",
         "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"LINE_USER_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
