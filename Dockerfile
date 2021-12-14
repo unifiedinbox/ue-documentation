@@ -5,8 +5,8 @@ RUN cd /tmp && npm install --production
 RUN mkdir -p /src && mv /tmp/node_modules /src
 
 # Bundle app source
+COPY .public/dist /src
 COPY . /src
-
 EXPOSE  5000
 
 ENV NODE_ENV production
