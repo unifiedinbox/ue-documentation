@@ -807,8 +807,39 @@
           "description": "Info about status"
         },
         "messages": {
-          "type": "string",
-          "example": "",
+          "type": "object",
+          "example": {
+              "UNIQUE_CONNECTION_IDENTIFIER": [{
+                  "uri": "",
+                  "mid": "",
+                  "timestamp": 0,
+                  "sender": {
+                    "connector": "",
+                    "address": "",
+                    "uri": ""
+                  },
+                  "returnPath": {
+                    "connector": "",
+                    "address": "",
+                    "uri": ""
+                  },
+                  "receivers": null,
+                  "date": 0,
+                  "userAgent": "",
+                  "headers": null,
+                  "parts": [{
+                      "id": "0",
+                      "contentType": "application/octet-stream",
+                      "type": "body",
+                      "name": "FILE_NAME",
+                      "data": "BASE64_DATA",
+                      "size": 1000,
+                      "sort": 0
+                    }
+                  ]
+                }
+              ]
+          },
           "description": "Messages description"
         }
       }
