@@ -105,21 +105,25 @@
 
 <header class="header" style="margin:10px">
 	<div id="header-nav" role="navigation" class="hidden-xs swagger-ui">
-		<img src="../images/ue-logo.png" class="UELogo">
+		<a href="https://unificationengine.com/" target="_blank">
+			<img src="../images/ue-logo.png" class="UELogo">
+		</a>
 		<select id="headerSelect" onchange="swaggerReload(this.value)" style="min-width:200px">
 			<option value="wa">WhatsApp</option>
 			<option value="line">Line</option>	
 			<option value="tg">Telegram</option>
 			<option value="viber-pa">Viber PA</option>
 			<option value="ig">Instagram</option>
+			<option value="wabasand">WhatsApp Sandbox</option>
 			<option value="webhook-payload">Webhooks</option>
 		</select>
 		<div id = 'webhook' style="padding-top: 1%;" class="hidden-xs swagger-ui">
-			<div>
-				<input style = "min-width: 200px; background-color: #E5E5E5 !important; border: 2px solid black; "id='weburl' type="text" placeholder="Application Webhook URL" required>
+			<div class="center" style="position: relative;">
+				<input style = "width: 500px; transform: translate(-50%, -50%); background-color: #E5E5E5 !important; border: 2px solid black; position: absolute; left: 50%; top: 50%; "id='weburl' type="text" placeholder="Application Webhook URL" required>
 			</div>
-			<div>	
-				<button onclick="checkUrl()" class="submitButton">Submit</button>
+			<p style="text-align: center;">(The incoming messages sent to a channel are forwarded to the webhook URL.)</p>
+			<div style="position: relative;">	
+				<button onclick="checkUrl()" class="submitButton" style="position: absolute; left: 50%;	top: 50%; margin-top: 15px; transform: translate(-50%, -50%);">Submit</button>
 			</div>
 		</div>
 
@@ -175,7 +179,8 @@ var hash_URLs = {
     "wa": "/swagger/docs?connector=wa",
 	"viber-pa": "/swagger/docs?connector=vp",
 	"ig": "/swagger/docs?connector=ig",
-	"line":"/swagger/docs?connector=line"
+	"line":"/swagger/docs?connector=line",
+	"wabasand":"/swagger/docs?connector=wabasand"
 };
 var hash_default = 'wa';
 

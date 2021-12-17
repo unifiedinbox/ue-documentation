@@ -1311,7 +1311,7 @@
       "properties": {
         "uri": {
           "type": "string",
-          "example": "whatsappofficial://PHONENUMBER_WITH_COUNTRYCODE@whatsapp."
+          "example": "whatsappofficial://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com"
         },
         "name": {
           "type": "string",

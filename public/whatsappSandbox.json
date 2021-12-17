@@ -1,0 +1,1482 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "\n# Introduction\n\nWelcome to the UnificationEngine® WhatsApp API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp.\n",
+      "version": "v2",
+      "title": "WhatsApp"
+    },
+    "host": "apiv2.unificationengine.com",
+    "basePath": "/v2",
+    "tags": [
+      {
+        "name": "Connection",
+        "description": "Add Connection"
+      },
+      {
+        "name": "Send messages",
+        "description": "Messaging using UnificationEngine®"
+      },
+      {
+        "name": "Media retrieve",
+        "description": "Retrieve media using UnificationEngine®"
+      },
+      {
+        "name": "Status update",
+        "description": "Change WhatsApp message status"
+      }
+    ],
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "/connection/add": {
+        "post": {
+          "tags": [
+            "Connection"
+          ],
+          "summary": "Add connection.",
+          "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n<br>\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a WhatsApp connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"whatsappsandbox://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/connectionAdd"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_1"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#text": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message Text",
+          "description": "This endpoint will send a text message to WhatsApp Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\nPlease note that A message can be sent via API, only if the user has communicated to the WhatsApp Business number in the last 24 hours.\n\nA text message can be a maximum of 4096 characters long. The maximum file size for uploaded media is 100MB.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __CONTENT_TYPE__: Supported Content-Types are text/plain and text/html",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageText"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#image": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Image",
+          "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageImage"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#imagewithtext": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Image  with text",
+          "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n3. text/plain\n4. text/html\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are text/plain, text/html, image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageImagewithtext"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#document": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Document",
+          "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum spported size is 100 MB.\nThe \"**type**\" available in message parts is file.\n\\\nTo send document  \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"DOCUMENT_LINK\" , \"DOCUMENT_LINK_SIZE \" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __DOCUMENT_LINK__:  The document link to be sent for eg: http://www.africau.edu/images/default/sample.pdf <br> __DOCUMENT_LINK_SIZE__: The character length of the document link to be sent <br> __CONTENT_TYPE__: Supported Content-Types application/pdf, application/msword, application/vnd.ms-powerpoint, application/vnd.ms-excel, text/plain <br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageDocument"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#audio": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Audio",
+          "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum supported size is 16MB.\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"AUDIO_LINK\" , \"AUDIO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __AUDIO_LINK__:  The audio link to be sent for eg: http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3 <br> __AUDIO_LINK_SIZE__: The character length of the audio link to be sent <br> __CONTENT_TYPE__: Supported Content-Types audio/acc, audio/mp4, audio/amr, audio/mpeg, audio/ogg; codecs=opus Note: The base audio/ogg type is not supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageAudio"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#video": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Video",
+          "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\nMaximum supported size is 16 MB.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"VIDEO_LINK\" , \"VIDEO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __VIDEO_LINK__:  The video link to be sent for eg: http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 <br> __VIDEO_LINK_SIZE__: The character length of the video link to be sent <br> __CONTENT_TYPE__: Supported Content-Types video/mp4 Note: Only H.264 video codec and AAC audio codec is supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageVideo"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#link": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Link",
+          "description": "This endpoint will send a Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LINK\" and \"LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __LINK__:  The link to be sent for eg: https://www.youtube.com/watch?v=C0DPdy98e4c <br> __LINK_SIZE__: The character length of the link to be sent <br> __CONTENT_TYPE__: Supported Content-Types is text/plain ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageLink"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#location": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Location",
+          "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is location.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LONGITUDE\",  \"LATITUDE\",  \"LOCATION_NAME\",  \"LOCATION_ADDRESS\", and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent <br> __LONGITUDE__: Longitude of the location <br> __LATITUDE__: Latitude of the location <br> __LOCATION_NAME__: Name of the location <br> __LOCATION_ADDRESS__: Address of the location. Only displayed if a name is present. <br> ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageLocation"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#contact": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Contact",
+          "description": "This endpoint will send a Contact message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is contact.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\"and USER_WHATSAPP_PHONE has to be changed. USER_WHATSAPP_PHONE  should be with country code but without the prefix + and spaces.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "json payload",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageContact"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#textpickersingle": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - TextPickerSingle",
+          "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageListpickerSingle"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#textpickermultiple": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - TextPickerMultiple",
+          "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageListpickerMultiple"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#replybutton": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - ReplyButton",
+          "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __BUTTON_TITLE__: Title of the button There’s a maximum of 20 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 256 characters <br> __MESSAGE_HEADER__: {\"type\": \"text\" | \"image\" | \"video\" | \"document\",\"text\": \"your text\",OR \"document\": {\"link\": \"DOCUMENT_LINK\",\"filename\": \"some-file-name\"}, OR\"video\": {\"link\": \"VIDEO_LINK\"} OR \"image\": {\"link\": \"IMAGE_LINK\"}} <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageReplyButton"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#template": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Template",
+          "description": "This endpoint will send a template message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new template message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"NAME_SPACE\" , \"ELEMENT_NAME\"  , “LOCALIZABLE_PARAMS_VALUE”  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PHONENUMBER_WITH_COUNTRYCODE__: The phone number to which the application has to send message <br> __NAME_SPACE__: A Message Template namespace is a bundle of language packs for a particular business. <br> __ELEMENT_NAME__: The element name that indicates which template to use within the namespace. <br> __LANGUAGE_CODE__: The code of the language or locale to use — Accepts both language and language_locale formats (e.g., en and en_US). <br> __LOCALIZABLE_PARAMS_VALUE__: This field is an array of values to apply to variables in the template <br> __MESSAGE_BODY_SIZE__: TThe character length of the parts->data For eg: For the below stringified json, the character length is 194. {\\\"namespace\\\": \\\"c616ba00_a627_e299_3118_095bbc2d5051\\\",\\\"element_name\\\": \\\"xdk_alert\\\",\\\"language\\\": \\\"en\\\", \\\"localizable_params\\\": [{\\\"default\\\":\\\"test 1\\\"},{\\\"default\\\":\\\"test 2\\\"}]}.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendTemplateMessage"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/retrieve": {
+        "post": {
+          "tags": [
+            "Media retrieve"
+          ],
+          "summary": "Retrieve image data",
+          "description": "The application has to retrieve media data using below API by providing the media id, message id, connection name, and user credentials.\n\nThe response for the above API call will be a base64 data as shown below.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__: Connection name <br> __MEDIA_ID__:  Id of the media retrieved in the webhook <br> __MESSAGE_ID__: Id of the webhook message",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/retrieveMessage"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/retrieveMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/status": {
+        "post": {
+          "tags": [
+            "Status update"
+          ],
+          "summary": "Message status change",
+          "description": "When users sent a message to the WABA number,  the message status won't be changed as read(blue double tick) in WhatsApp automatically.\nAs soon the webhook receives the message, the application has to call a UE api to change the message status as read.\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> MESSAGE_ID: Id of the webhook message",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/statusUpdate"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/inline_response_200_2"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "userAuth": {
+        "description": "# User Authentication\n\nUse **User accesskey** as *Username* and **User Secret** as *Password*\n",
+        "type": "basic"
+      }
+    },
+    "definitions": {
+      "sendMessageText": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "type": "object",
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "CONTENT_TYPE",
+                "data": "MESSAGE_BODY",
+                "size": "MESSAGE_BODY_SIZE",
+                "type": "body",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageImage": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "CONTENT_TYPE",
+                "size": 36,
+                "type": "image_link",
+                "name": "file name",
+                "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageImagewithtext": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageImagewithtext_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "size": 50,
+                "type": "image_link",
+                "name": "FILE_NAME",
+                "data": "IMAGE_LINK",
+                "sort": 0
+              },
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "data": "MESSAGE_BODY",
+                "size": "MESSAGE_BODY_SIZE",
+                "type": "body",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageDocument": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "data": "DOCUMENT_LINK",
+                "name": "FILE_NAME",
+                "size": "DOCUMENT_LINK_SIZE",
+                "type": "file",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageAudio": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "data": "AUDIO_LINK",
+                "size": 2500,
+                "name": "FILE_NAME",
+                "type": "audio_link",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageVideo": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "CONTENT_TYPE",
+                "data": "VIDEO_LINK",
+                "size": "VIDEO_LINK_SIZE",
+                "type": "video_link",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageLink": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "text/plain",
+                "data": "LINK",
+                "size": "LINK_SIZE",
+                "type": "link",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageLocation": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "application/json",
+                "data": "{ \"longitude\": LONGITUDE, \"latitude\": LATITUDE, \"name\": \"LOCATION_NAME\", \"address\": \"LOCATION_ADDRESS\"}",
+                "size": 100,
+                "type": "location",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageContact": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageText_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "application/json",
+                "data": "[{\"addresses\": [{\"city\": \"CITY\",\"country\": \"COUNTRY\",\"country_code\": \"TWO_LETTER_COUNTRY_CODE\",\"state\": \"STATE\",\"street\": \"STREET\",\"type\": \"HOME\",\"zip\": \"ZIP\" }],\"birthday\": \"YYYY-MM-DD\",\"emails\": [{\"email\": \"EMAIL_ADDRESS_1\",\"type\": \"WORK\"},{\"email\": \"EMAIL_ADDRESS_2\",\"type\": \"WORK\"}],\"name\": {\"first_name\": \"FIRST_NAME\",\"formatted_name\": \"FULL_NAME\",\"last_name\": \"LAST_NAME\"},\"org\": {\"company\": \"COMAPNY_NAME\",\"department\": \"DEPARTMENT_NAME\",\"title\": \"JOB_TITLE\"},\"phones\": [{\"phone\": \"USER_PHONENUMBER1_WITH_COUNTRYCODE\",\"type\": \"HOME\"}, {\"phone\": \"USER_PHONENUMBER2_WITH_COUNTRYCODE\",\"type\": \"WORK\",\"wa_id\": \"USER_WHATSAPP_PHONE\"}],\"urls\": [{ \"url\": \"WEBSITE\", \"type\": \"WORK\"}]}]",
+                "size": 100,
+                "type": "contacts",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageListpickerSingle": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageImagewithtext_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+                "size": 1000,
+                "type": "body",
+                "sort": 0
+              },
+              {
+                "id": "2",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                "size": 1000,
+                "type": "list_picker/text",
+                "sort": 1
+              },
+              {
+                "id": "3",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+                "size": 1000,
+                "type": "header",
+                "sort": 2
+              },
+              {
+                "id": "4",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+                "size": 1000,
+                "type": "footer",
+                "sort": 3
+              },
+              {
+                "id": "5",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
+                "size": 1000,
+                "type": "received_message",
+                "sort": 4
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageListpickerMultiple": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageImagewithtext_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+                "size": 1000,
+                "type": "body",
+                "sort": 0
+              },
+              {
+                "id": "2",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                "size": 1000,
+                "type": "list_picker/text",
+                "sort": 1
+              },
+              {
+                "id": "3",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                "size": 1000,
+                "type": "list_picker/text",
+                "sort": 2
+              },
+              {
+                "id": "4",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+                "size": 1000,
+                "type": "header",
+                "sort": 3
+              },
+              {
+                "id": "5",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+                "size": 1000,
+                "type": "footer",
+                "sort": 4
+              },
+              {
+                "id": "6",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
+                "size": 1000,
+                "type": "received_message",
+                "sort": 5
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageReplyButton": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageImagewithtext_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+                "size": 1000,
+                "type": "body",
+                "sort": 0
+              },
+              {
+                "id": "2",
+                "contentType": "text/plain",
+                "data": "{\"buttons\":[{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                "size": 1000,
+                "type": "list_picker/button",
+                "sort": 1
+              },
+              {
+                "id": "3",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+                "size": 1000,
+                "type": "header",
+                "sort": 2
+              },
+              {
+                "id": "4",
+                "contentType": "text/plain",
+                "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+                "size": 1000,
+                "type": "footer",
+                "sort": 3
+              }
+            ]
+          }
+        }
+      },
+      "retrieveMessage": {
+        "type": "object",
+        "required": [
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "example": "unified://UNIQUE_CONNECTION_IDENTIFIER?messageId=MESSAGE_ID&mediaId=MEDIA_ID"
+          }
+        }
+      },
+      "retrieveMessageResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          },
+          "messages": {
+            "type": "object",
+            "example": {
+              "UNIQUE_CONNECTION_IDENTIFIER": [
+                {
+                  "uri": "",
+                  "mid": "",
+                  "timestamp": 0,
+                  "sender": {
+                    "connector": "",
+                    "address": "",
+                    "uri": ""
+                  },
+                  "returnPath": {
+                    "connector": "",
+                    "address": "",
+                    "uri": ""
+                  },
+                  "date": 0,
+                  "userAgent": "",
+                  "parts": [
+                    {
+                      "id": "0",
+                      "contentType": "CONTENT_TYPE",
+                      "type": "body",
+                      "name": "FILE_NAME",
+                      "data": "BASE64_DATA",
+                      "size": 1000,
+                      "sort": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "description": "Messages description",
+            "properties": {}
+          }
+        }
+      },
+      "sendTemplateMessage": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessageImagewithtext_message"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PHONENUMBER_WITH_COUNTRYCODE",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "text/plain",
+                "data": "{\"namespace\": \"NAME_SPACE\",\"element_name\": \"ELEMENT_NAME\",\"language\": \"LANGUAGE_CODE\", \"localizable_params\": [{\"default\":\"LOCALIZABLE_PARAMS_VALUE_1\"},{\"default\":\"LOCALIZABLE_PARAMS_VALUE_2\"}]}",
+                "size": 1000,
+                "type": "template",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "successMessage": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          }
+        }
+      },
+      "statusUpdate": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/statusUpdate_message"
+            }
+          }
+        },
+        "example": {
+          "message": [
+            {
+              "uri": "unified://UNIQUE_CONNECTION_IDENTIFIER?messageId=MESSAGE_ID",
+              "status": "read"
+            }
+          ]
+        }
+      },
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          },
+          "uri": {
+            "type": "string",
+            "example": "user://USER_ACCESSKEY:USER_ACCESSSECRET",
+            "description": "User details"
+          }
+        }
+      },
+      "connectionAdd": {
+        "type": "object",
+        "required": [
+          "name",
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "example": "whatsappsandbox://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com"
+          },
+          "name": {
+            "type": "string",
+            "example": "UNIQUE_CONNECTION_IDENTIFIER"
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          }
+        }
+      },
+      "inline_response_200_2": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/definitions/inline_response_200_2_status"
+          },
+          "URIs": {
+            "type": "array",
+            "description": "Send list",
+            "items": {
+              "type": "string",
+              "example": "whatsappsandbox://whatsapp.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
+            }
+          }
+        }
+      },
+      "sendMessageText_message_receivers": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "Connector": {
+            "type": "string"
+          }
+        }
+      },
+      "sendMessageText_message_parts": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sort": {
+            "type": "number"
+          }
+        }
+      },
+      "sendMessageText_message": {
+        "type": "object",
+        "properties": {
+          "receivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessageText_message_receivers"
+            }
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessageText_message_parts"
+            }
+          }
+        }
+      },
+      "sendMessageImagewithtext_message": {
+        "type": "object",
+        "properties": {
+          "receivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessageText_message_receivers"
+            }
+          },
+          "subject": {
+            "type": "string"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessageText_message_parts"
+            }
+          }
+        }
+      },
+      "statusUpdate_message": {
+        "type": "object",
+        "properties": {
+          "uri": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "200",
+            "description": "status"
+          },
+          "info": {
+            "type": "string",
+            "example": "OK",
+            "description": "staus"
+          }
+        }
+      },
+      "inline_response_200_2_status": {
+        "type": "object",
+        "properties": {
+          "UNIQUE_CONNECTION_IDENTIFIER": {
+            "$ref": "#/definitions/inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication required!"
+      },
+      "successMessage": {
+        "description": "A User object",
+        "schema": {
+          "$ref": "#/definitions/successMessage"
+        }
+      },
+      "retrieveMessage": {
+        "description": "Api Success",
+        "schema": {
+          "$ref": "#/definitions/retrieveMessageResponse"
+        }
+      }
+    }
+  }
