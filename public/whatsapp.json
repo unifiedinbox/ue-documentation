@@ -35,7 +35,7 @@
           "Connection"
         ],
         "summary": "Add connection.",
-        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n<br>\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a WhatsApp connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"whatsapp://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n<br>\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a WhatsApp connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u USER_ACCESSKEY:USER_ACCESSSECRET --data '{\"uri\":\"whatsappofficial://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -107,7 +107,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Image",
-        "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n5. image/gif\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -143,7 +143,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Image  with text",
-        "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n3. image/jpg\n4. image/png\n5. image/gif\n\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -1172,38 +1172,39 @@
         "messages": {
           "type": "object",
           "example": {
-              "UNIQUE_CONNECTION_IDENTIFIER": [{
-                  "uri": "",
-                  "mid": "",
-                  "timestamp": 0,
-                  "sender": {
-                    "connector": "",
-                    "address": "",
-                    "uri": ""
-                  },
-                  "returnPath": {
-                    "connector": "",
-                    "address": "",
-                    "uri": ""
-                  },
-                  "receivers": null,
-                  "date": 0,
-                  "userAgent": "",
-                  "headers": null,
-                  "parts": [{
-                      "id": "0",
-                      "contentType": "application/octet-stream",
-                      "type": "body",
-                      "name": "FILE_NAME",
-                      "data": "BASE64_DATA",
-                      "size": 1000,
-                      "sort": 0
-                    }
-                  ]
-                }
-              ]
+            "UNIQUE_CONNECTION_IDENTIFIER": [
+              {
+                "uri": "",
+                "mid": "",
+                "timestamp": 0,
+                "sender": {
+                  "connector": "",
+                  "address": "",
+                  "uri": ""
+                },
+                "returnPath": {
+                  "connector": "",
+                  "address": "",
+                  "uri": ""
+                },
+                "date": 0,
+                "userAgent": "",
+                "parts": [
+                  {
+                    "id": "0",
+                    "contentType": "CONTENT_TYPE",
+                    "type": "body",
+                    "name": "FILE_NAME",
+                    "data": "BASE64_DATA",
+                    "size": 1000,
+                    "sort": 0
+                  }
+                ]
+              }
+            ]
           },
-          "description": "Messages description"
+          "description": "Messages description",
+          "properties": {}
         }
       }
     },
@@ -1308,7 +1309,7 @@
       "properties": {
         "uri": {
           "type": "string",
-          "example": "whatsapp://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com"
+          "example": "whatsappofficial://PHONENUMBER_WITH_COUNTRYCODE@whatsapp.com"
         },
         "name": {
           "type": "string",
@@ -1335,21 +1336,14 @@
       "type": "object",
       "properties": {
         "status": {
-          "type": "integer",
-          "example": 200,
-          "description": "Status of Api"
-        },
-        "info": {
-          "type": "string",
-          "example": "200 OK",
-          "description": "Info about status"
+          "$ref": "#/definitions/inline_response_200_2_status"
         },
         "URIs": {
           "type": "array",
           "description": "Send list",
           "items": {
             "type": "string",
-            "example": "whatsapp://whatsapp.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
+            "example": "whatsappofficial://whatsapp.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
           }
         }
       }
@@ -1439,6 +1433,29 @@
         },
         "status": {
           "type": "string"
+        }
+      }
+    },
+    "inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "200",
+          "description": "status"
+        },
+        "info": {
+          "type": "string",
+          "example": "OK",
+          "description": "staus"
+        }
+      }
+    },
+    "inline_response_200_2_status": {
+      "type": "object",
+      "properties": {
+        "UNIQUE_CONNECTION_IDENTIFIER": {
+          "$ref": "#/definitions/inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER"
         }
       }
     }
