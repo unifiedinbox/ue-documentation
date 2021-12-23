@@ -35,9 +35,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent, which will be  there in the webhook ‘receiveraddress’",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/none"
             }
@@ -71,9 +71,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __CONTENT_TYPE__: Supported Content-Types are text/plain and text/html",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageText"
             }
@@ -107,9 +107,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageImage"
             }
@@ -143,9 +143,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are text/plain, text/html, image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageImagewithtext"
             }
@@ -179,9 +179,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __DOCUMENT_LINK__:  The document link to be sent for eg: http://www.africau.edu/images/default/sample.pdf <br> __DOCUMENT_LINK_SIZE__: The character length of the document link to be sent <br> __CONTENT_TYPE__: Supported Content-Types application/pdf, application/msword, application/vnd.ms-powerpoint, application/vnd.ms-excel, text/plain <br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageDocument"
             }
@@ -215,9 +215,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __AUDIO_LINK__:  The audio link to be sent for eg: http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3 <br> __AUDIO_LINK_SIZE__: The character length of the audio link to be sent <br> __CONTENT_TYPE__: Supported Content-Types audio/acc, audio/mp4, audio/amr, audio/mpeg, audio/ogg; codecs=opus Note: The base audio/ogg type is not supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageAudio"
             }
@@ -251,9 +250,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __VIDEO_LINK__:  The video link to be sent for eg: http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 <br> __VIDEO_LINK_SIZE__: The character length of the video link to be sent <br> __CONTENT_TYPE__: Supported Content-Types video/mp4 Note: Only H.264 video codec and AAC audio codec is supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageVideo"
             }
@@ -287,9 +286,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __LINK__:  The link to be sent for eg: https://www.youtube.com/watch?v=C0DPdy98e4c <br> __LINK_SIZE__: The character length of the link to be sent <br> __CONTENT_TYPE__: Supported Content-Types is text/plain ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageLink"
             }
@@ -323,9 +322,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent <br> __LONGITUDE__: Longitude of the location <br> __LATITUDE__: Latitude of the location <br> __LOCATION_NAME__: Name of the location <br> __LOCATION_ADDRESS__: Address of the location. Only displayed if a name is present. <br> ",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageLocation"
             }
@@ -359,9 +358,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __TELEGRAM_USER_ID__: The user id to which the message has to be sent <br> __BUTTON_TITLE__: Button title <br> __BUTTON_PAYLOAD__: Button payload, This will be the text that will be triggered when button is clicked. <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent.",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageReplyButton"
             }
@@ -395,9 +394,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__: Connection name <br> __MEDIA_ID__:  Id of the media retrieved in the webhook <br> __MESSAGE_ID__: Id of the webhook message",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/retrieveMessage"
             }
@@ -455,8 +454,8 @@
             {
               "id": "0",
               "contentType": "text/plain",
-              "data": "test",
-              "size": 4,
+              "data": "MESSAGE_BODY",
+              "size": "MESSAGE_BODY_SIZE",
               "type": "body",
               "sort": 1
             }
@@ -489,11 +488,11 @@
           "parts": [
             {
               "id": "0",
-              "contentType": "image/jpeg",
-              "size": 36,
+              "contentType": "CONTENT_TYPE",
+              "size": "IMAGE_LINK_SIZE",
               "type": "image_link",
-              "name": "file name",
-              "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+              "name": "FILE_NAME",
+              "data": "IMAGE_LINK",
               "sort": 1
             }
           ]
@@ -747,8 +746,8 @@
           "parts": [
             {
               "id": "1",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+              "contentType": "text/html",
+              "data": "test",
               "size": 1000,
               "type": "body",
               "sort": 0
@@ -756,25 +755,25 @@
             {
               "id": "2",
               "contentType": "text/plain",
-              "data": "{\"buttons\":[{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
               "size": 1000,
-              "type": "list_picker/button",
+              "type": "quickreply",
               "sort": 1
             },
             {
               "id": "3",
               "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
               "size": 1000,
-              "type": "header",
+              "type": "quickreply",
               "sort": 2
             },
             {
               "id": "4",
               "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
               "size": 1000,
-              "type": "footer",
+              "type": "quickreply",
               "sort": 3
             }
           ]
@@ -829,7 +828,7 @@
                   "headers": null,
                   "parts": [{
                       "id": "0",
-                      "contentType": "application/octet-stream",
+                      "contentType": "CONTENT_TYPE",
                       "type": "body",
                       "name": "FILE_NAME",
                       "data": "BASE64_DATA",
@@ -882,6 +881,7 @@
     "none": {
       "type": "object",
       "required": [
+        "name",
         "uri"
       ],
       "properties": {
@@ -913,15 +913,8 @@
     "inline_response_200_2": {
       "type": "object",
       "properties": {
-        "status": {
-          "type": "integer",
-          "example": 200,
-          "description": "Status of Api"
-        },
-        "info": {
-          "type": "string",
-          "example": "200 OK",
-          "description": "Info about status"
+        "Status": {
+          "$ref": "#/definitions/inline_response_200_2_status"
         },
         "URIs": {
           "type": "array",
@@ -1007,6 +1000,29 @@
           "items": {
             "$ref": "#/definitions/sendMessageText_message_parts"
           }
+        }
+      }
+    },
+    "inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "200",
+          "description": "status"
+        },
+        "info": {
+          "type": "string",
+          "example": "OK",
+          "description": "staus"
+        }
+      }
+    },
+    "inline_response_200_2_status": {
+      "type": "object",
+      "properties": {
+        "UNIQUE_CONNECTION_IDENTIFIER": {
+          "$ref": "#/definitions/inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER"
         }
       }
     }

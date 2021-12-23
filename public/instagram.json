@@ -27,15 +27,15 @@
           "Connection"
         ],
         "summary": "Add connection.",
-        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n\n# Add connection uri details\n\n__If the \"connectionname\" in webhook is empty you can get attachment->uri and  replace  “URI” in the below command.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a instagram connection is**\n\n    curl -XPOST  https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"URI\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n\nOnce  the __URI__ is replaced it will be as below\n\n    curl -XPOST  https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"instagram://UNIQUE_UNIQUE_INSTAGRAM_USER_ID@instagram.com?isDirectMsg=true\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n\nThe UNIQUE_UNIQUE_INSTAGRAM_USER_ID is the Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’\n\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. A service can be anything like WhatsApp, Facebook Messenger, Telegram etc. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n\n# Add connection uri details\n\n__If the \"connectionname\" in webhook is empty you can get attachment->uri and  replace  “URI” in the below command.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a instagram connection is**\n\n    curl -XPOST  https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"URI\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n\n\nOnce  the __URI__ is replaced it will be as below\n\n    curl -XPOST  https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"instagram://UNIQUE_UNIQUE_INSTAGRAM_USER_ID@instagram.com?isDirectMsg=true\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n\n\nThe UNIQUE_UNIQUE_INSTAGRAM_USER_ID is the Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’\n\n\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name <br> __UNIQUE_INSTAGRAM_USER_ID__: The Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/none"
+              "$ref": "#/definitions/connectionAdd"
             }
           }
         ],
@@ -67,9 +67,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __UNIQUE_INSTAGRAM_USER_ID__: The Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’ <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br>",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageText"
             }
@@ -103,9 +103,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __UNIQUE_INSTAGRAM_USER_ID__: The Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’ <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file <br>",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageImage"
             }
@@ -139,9 +139,9 @@
         "parameters": [
           {
             "in": "body",
-            "name": "none",
-            "description": "none",
-            "required": false,
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __UNIQUE_INSTAGRAM_USER_ID__: The Instagram user id  to which the application has to send a message, which will be there in the webhook  ‘receiveraddress’ <br> __BUTTON_TITLE__: Button title <br> __BUTTON_PAYLOAD__: Button payload, This will be the text that will be triggered when button is clicked. <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent.",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageButton"
             }
@@ -199,8 +199,8 @@
             {
               "id": "0",
               "contentType": "text/plain",
-              "data": "test",
-              "size": 4,
+              "data": "MESSAGE_BODY",
+              "size": "MESSAGE_BODY_SIZE",
               "type": "body",
               "sort": 1
             }
@@ -233,11 +233,11 @@
           "parts": [
             {
               "id": "0",
-              "contentType": "image/jpeg",
-              "size": 36,
+              "contentType": "CONTENT_TYPE",
+              "size": "IMAGE_LINK_SIZE",
               "type": "image_link",
-              "name": "file name",
-              "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+              "name": "FILE_NAME",
+              "data": "IMAGE_LINK",
               "sort": 1
             }
           ]
@@ -319,29 +319,10 @@
         }
       }
     },
-    "inline_response_200": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "integer",
-          "example": 200,
-          "description": "Status of Api"
-        },
-        "info": {
-          "type": "string",
-          "example": "200 OK",
-          "description": "Info about status"
-        },
-        "uri": {
-          "type": "string",
-          "example": "user://USER_ACCESSKEY:USER_ACCESSSECRET",
-          "description": "User details"
-        }
-      }
-    },
-    "none": {
+    "connectionAdd": {
       "type": "object",
       "required": [
+        "name",
         "uri"
       ],
       "properties": {
@@ -373,15 +354,8 @@
     "inline_response_200_2": {
       "type": "object",
       "properties": {
-        "status": {
-          "type": "integer",
-          "example": 200,
-          "description": "Status of Api"
-        },
-        "info": {
-          "type": "string",
-          "example": "200 OK",
-          "description": "Info about status"
+        "Status": {
+          "$ref": "#/definitions/inline_response_200_2_status"
         },
         "URIs": {
           "type": "array",
@@ -467,6 +441,29 @@
           "items": {
             "$ref": "#/definitions/sendMessageText_message_parts"
           }
+        }
+      }
+    },
+    "inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "200",
+          "description": "status"
+        },
+        "info": {
+          "type": "string",
+          "example": "OK",
+          "description": "status"
+        }
+      }
+    },
+    "inline_response_200_2_status": {
+      "type": "object",
+      "properties": {
+        "UNIQUE_CONNECTION_IDENTIFIER": {
+          "$ref": "#/definitions/inline_response_200_2_status_UNIQUE_CONNECTION_IDENTIFIER"
         }
       }
     }

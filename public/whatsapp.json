@@ -467,7 +467,7 @@
           "Send messages"
         ],
         "summary": "Send Message - ReplyButton",
-        "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user. \n\\\nA maximum of 3 buttons with a character length upto 20 are supported by WhatsApp. If more than 3 buttons are added in the request payload, UnificationEngine has a unique feature of converting the buttons into a list picker for better user experience. If the button length are more than 20 characters, UnificationEngine will converted it into a numbered menu in WhatsApp. \n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -580,7 +580,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> MESSAGE_ID: Id of the webhook message",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __MESSAGE_ID__: Id of the webhook message",
             "required": true,
             "schema": {
               "$ref": "#/definitions/statusUpdate"
@@ -675,10 +675,10 @@
             {
               "id": "0",
               "contentType": "CONTENT_TYPE",
-              "size": 36,
+              "size": "IMAGE_LINK_SIZE",
               "type": "image_link",
-              "name": "file name",
-              "data": "https://uibai.s3.eu-central-1.amazonaws.com/1603517259386",
+              "name": "FILE_NAME",
+              "data": "IMAGE_LINK",
               "sort": 1
             }
           ]
