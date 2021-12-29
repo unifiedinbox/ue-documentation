@@ -3,7 +3,7 @@
     "info": {
       "description": "\n# Introduction\n\nWelcome to the UnificationEngine® WhatsApp API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp.\n",
       "version": "v2",
-      "title": "WhatsApp"
+      "title": "WhatsApp Sandbox"
     },
     "host": "apiv2.unificationengine.com",
     "basePath": "/v2",
@@ -71,7 +71,7 @@
             "Send messages"
           ],
           "summary": "Send Message Text",
-          "description": "This endpoint will send a text message to WhatsApp Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\nPlease note that A message can be sent via API, only if the user has communicated to the WhatsApp Business number in the last 24 hours.\n\nA text message can be a maximum of 4096 characters long. The maximum file size for uploaded media is 100MB.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a text message to WhatsApp Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\nPlease note that A message can be sent via API, only if the user has communicated to the WhatsApp Business number in the last 24 hours.\n\nA text message can be a maximum of 4096 characters long. The maximum file size for uploaded media is 100MB.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n![text](/text.jpg)",
           "parameters": [
             {
               "in": "body",
@@ -107,7 +107,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Image",
-          "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n![image](/image.jpg)",
           "parameters": [
             {
               "in": "body",
@@ -143,7 +143,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Image  with text",
-          "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n3. text/plain\n4. text/html\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\nMaximum supported image size is 5 MB.\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n3. text/plain\n4. text/html\n\nTo send image \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![text](/imgwithtxt.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -179,7 +179,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Document",
-          "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum spported size is 100 MB.\nThe \"**type**\" available in message parts is file.\n\\\nTo send document  \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"DOCUMENT_LINK\" , \"DOCUMENT_LINK_SIZE \" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum spported size is 100 MB.\nThe \"**type**\" available in message parts is file.\n\\\nTo send document  \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\",<br> “CONTENT_TYPE”, \"DOCUMENT_LINK\" , \"DOCUMENT_LINK_SIZE \" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![document](/doc.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -215,7 +215,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Audio",
-          "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum supported size is 16MB.\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"AUDIO_LINK\" , \"AUDIO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum supported size is 16MB.\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"AUDIO_LINK\" , \"AUDIO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![audio](/audio.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -251,7 +251,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Video",
-          "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\nMaximum supported size is 16 MB.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"VIDEO_LINK\" , \"VIDEO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\nMaximum supported size is 16 MB.\n\\\nTo send audio \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"VIDEO_LINK\" , \"VIDEO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![video](/video.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -287,7 +287,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Link",
-          "description": "This endpoint will send a Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LINK\" and \"LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is link.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LINK\" and \"LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![link](/link.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -323,7 +323,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Location",
-          "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is location.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LONGITUDE\",  \"LATITUDE\",  \"LOCATION_NAME\",  \"LOCATION_ADDRESS\", and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a Location message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is location.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"LONGITUDE\", \"LATITUDE\",  \"LOCATION_NAME\",  \"LOCATION_ADDRESS\", <br>and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![location](/location.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -359,7 +359,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Contact",
-          "description": "This endpoint will send a Contact message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is contact.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\"and USER_WHATSAPP_PHONE has to be changed. USER_WHATSAPP_PHONE  should be with country code but without the prefix + and spaces.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a Contact message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is contact.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\"and USER_WHATSAPP_PHONE has to be changed.<br> USER_WHATSAPP_PHONE  should be with country code but without the prefix + and spaces.\n\n`Remember — the API requires authentication!`\n\n![contact](/contact.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -395,7 +395,7 @@
             "Send messages"
           ],
           "summary": "Send Message - TextPickerSingle",
-          "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,<br>\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.<br>\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n\n![listpicker](/listpicksingle.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -431,7 +431,7 @@
             "Send messages"
           ],
           "summary": "Send Message - TextPickerMultiple",
-          "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,<br>\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n\n`Remember — the API requires authentication!`\n\n![listpicker](/listpickmulti.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -467,7 +467,7 @@
             "Send messages"
           ],
           "summary": "Send Message - ReplyButton",
-          "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user. \n\\\nA maximum of 3 buttons with a character length upto 20 are supported by WhatsApp. If more than 3 buttons are added in the request payload, UnificationEngine has a unique feature of converting the buttons into a list picker for better user experience. If the button length are more than 20 characters, UnificationEngine will converted it into a numbered menu in WhatsApp. \n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a ReplyButton message to service. \n\\\nThis api call should be authenticated with the key and secret of the user. \n\\\nA maximum of 3 buttons with a character length upto 20 are supported by WhatsApp. If more than 3 buttons are added in the request payload, UnificationEngine has a unique feature of converting the buttons into a list picker for better user experience. If the button length are more than 20 characters, UnificationEngine will converted it into a numbered menu in WhatsApp. \n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",<br>\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n\n`Remember — the API requires authentication!`\n\n![button](/button.jpg)\n",
           "parameters": [
             {
               "in": "body",
@@ -503,7 +503,7 @@
             "Send messages"
           ],
           "summary": "Send Message - Template",
-          "description": "This endpoint will send a template message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new template message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"NAME_SPACE\" , \"ELEMENT_NAME\"  , “LOCALIZABLE_PARAMS_VALUE”  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "description": "This endpoint will send a template message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nTo send a new template message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"NAME_SPACE\" , \"ELEMENT_NAME\"  , “LOCALIZABLE_PARAMS_VALUE”  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n\n![template](/template.jpg)\n",
           "parameters": [
             {
               "in": "body",
