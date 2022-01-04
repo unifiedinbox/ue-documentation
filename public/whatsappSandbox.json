@@ -71,7 +71,7 @@
             "Send messages"
           ],
           "summary": "Send Message Text",
-          "description": "This endpoint will send a text message to WhatsApp Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\nPlease note that A message can be sent via API, only if the user has communicated to the WhatsApp Business number in the last 24 hours.\n\nA text message can be a maximum of 4096 characters long. The maximum file size for uploaded media is 100MB.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n![text](/text.jpg)",
+          "description": "This endpoint will send a text message to service. The contentType in the ‘part' parameter should be one of the connector capabilities,<br> which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\nPlease note that A message can be sent via API, only if the user has communicated to the WhatsApp Business number in the last 24 hours.\n\nA text message can be a maximum of 4096 characters long. The maximum file size for uploaded media is 100MB.\n\\\nTo send a new message \"PHONENUMBER_WITH_COUNTRYCODE\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n![text](/text.jpg)",
           "parameters": [
             {
               "in": "body",
@@ -1337,7 +1337,7 @@
       "inline_response_200_2": {
         "type": "object",
         "properties": {
-          "status": {
+          "Status": {
             "$ref": "#/definitions/inline_response_200_2_status"
           },
           "URIs": {

@@ -1,0 +1,1475 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Apple Messages for Business API! You can use our API to access UnificationEngine® API endpoints, which can communicate with Apple Messages for Business.\n",
+    "version": "v2",
+    "title": "Apple Messages for Business"
+  },
+  "host": "apiv2.unificationengine.com",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "Connection",
+      "description": "Add Connection"
+    },
+    {
+      "name": "Send messages",
+      "description": "Messaging using UnificationEngine®"
+    },
+    {
+      "name": "Media retrieve",
+      "description": "Retrieve media using UnificationEngine®"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/connection/add": {
+      "post": {
+        "tags": [
+          "Connection"
+        ],
+        "summary": "Add connection.",
+        "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a ABC connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"applebusinesschat://SOURCE_ID@apple.com?bot_id=DESTINATION_ID\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n    \n<br>\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent, which will be  there in the webhook ‘receiveraddress’. SOURCE_ID is the encodeURIComponent of the 'receiveraddress' <br> __DESTINATION_ID__: DESTINATION_ID is the senderaddress in the webhook",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/connectionAdd"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/connectionAddResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#text": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message Text",
+        "description": "This endpoint will send a text message to apple Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application.\n\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\\\nThe \"**type**\" available in message parts is body.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __CONTENT_TYPE__: Supported Content-Types are text/plain and text/html",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageText"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#image": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Image",
+        "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\nTo send image \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageImage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#imagewithtext": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Image  with text",
+        "description": "This endpoint will send an image with text  message to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. text/plain \n2. text/html\n3. image/jpg\n4. image/png\n\nTo send image \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are text/plain, text/html, image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageImagewithtext"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#document": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Document",
+        "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is file.\n\\\nTo send document  \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"DOCUMENT_LINK\" , \"DOCUMENT_LINK_SIZE \" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __DOCUMENT_LINK__:  The document link to be sent for eg: http://www.africau.edu/images/default/sample.pdf <br> __DOCUMENT_LINK_SIZE__: The character length of the document link to be sent <br> __CONTENT_TYPE__: Supported Content-Types application/pdf, application/msword, application/vnd.ms-powerpoint, application/vnd.ms-excel, text/plain <br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageDocument"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#audio": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Audio",
+        "description": "This endpoint will send an audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send audio \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"AUDIO_LINK\" , \"AUDIO_LINK_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __AUDIO_LINK__:  The audio link to be sent for eg: http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3 <br> __AUDIO_LINK_SIZE__: The character length of the audio link to be sent <br> __CONTENT_TYPE__: Supported Content-Types audio/acc, audio/mp4, audio/amr, audio/mpeg, audio/ogg; codecs=opus Note: The base audio/ogg type is not supported.<br> __FILE_NAME__: The name to be displayed for the file",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageAudio"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#video": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Video",
+        "description": "This endpoint will send a video message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send audio \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"VIDEO_LINK\" , \"VIDEO_LINK_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __VIDEO_LINK__:  The video link to be sent for eg: http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 <br> __VIDEO_LINK_SIZE__: The character length of the video link to be sent <br> __CONTENT_TYPE__: Supported Content-Types video/mp4 Note: Only H.264 video codec and AAC audio codec is supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageVideo"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#richlink": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Rick Link",
+        "description": "This endpoint will send a Rich Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"WEB_URL\" and \"WEB_URL_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __WEB_URL__: The link to be sent for eg:https://uib.ai. If the web url has open graph metadata for image and video, the corresponding image and video will be loaded in the  iMessage app. <br> __WEB_URL_SIZE__: The character length of the link to be sent <br> __CONTENT_TYPE__: Supported Content-Types text/plain",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageLink"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#TextPickerSingle": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - TextPickerSingle",
+        "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\",  \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageListpickerSingle"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#TextPickerMultiple": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - TextPickerMultiple",
+        "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageListpickerMultiple"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#button": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Button",
+        "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __CONTENT_TYPE__: Supported Content-Types are text/plain and text/html",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessageReplyButton"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#payment": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Payment",
+        "description": "This endpoint will send a payment to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"ITEM_LABEL\", \"ITEM_AMOUNT\", \"LABEL\", \"TOTAL_AMOUNT\", \"MERCHANT_ID\", \"MERCHANT_NAME\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"THREE_LETTER_ISO_CURRENCYCODE\", \"MY_PAYMENT_GATEWAY_URL\",  \"PAYMENT_DISPLAY_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\nPlease note that the Merchant ID has to be added under your account in https://register.apple.com/ and submit it for review.\n`Remember — the API requires authentication!`\n\\\nSample node js code to get  the  merchant session to be used the payment API(MERCHANT_SESSION )<br>\n\n    const axios = require('axios');\n    const fs = require('fs'); \n    \n    \n    const MERCHANT_ID = \"<your.merchant.id>\" \n    const DOMAIN_NAME = \"<your.verified.domain.name>\"  ( eg test.com - without https)\n    const MERCHANT_NAME = \"<your merchant name>\"\n    \n    const PAYMENT_GATEWAY_URL = \"https://<your.verified.domain.name>/paymentGateway\"\n    const APPLE_PAY_MERCHANT_SESSION_GATEWAY = 'https://apple-pay-gateway.apple.com/paymentservices/paymentSession';\n    \n    //please find below the steps to generate these 2 files\n    const PEM_FILE_PATH = \"<local path to your .pem file>\"\n    const PRIVATE_KEY_FILE_PATH = \"<local path to your private .key file>\"\n    \n    let payload = {\n      \"merchantIdentifier\": MERCHANT_ID,\n      \"domainName\":DOMAIN_NAME,\n      \"displayName\": \"MERCHANT_NAME\",\n      \"initiative\": \"messaging\",\n      \"initiativeContext\": PAYMENT_GATEWAY_URL\n    }\n    \n    const result = await axios.post(\n      APPLE_PAY_MERCHANT_SESSION_GATEWAY,\n      payload,\n      {\n        httpsAgent: new https.Agent({\n        rejectUnauthorized: false,\n        'cert': fs.readFileSync(PEM_FILE_PATH),\n        'key': fs.readFileSync(PRIVATE_KEY_FILE_PATH),\n        })\n      }\n    )\n    MERCHANT_SESSION = result.data;\n**1.  Generate the payload file.**\n  Save the below payload in a file and name it as “data.json”\n      \n    {\n       \"merchantIdentifier\": <SHA256 hash of your text merchant identifier>,\n       \"domainName\": <domain name associated with Apple Pay merchant account>,\n       \"displayName\": <Merchant name in human readable form>,\n       \"initiative\": \"messaging\",\n       \"initiativeContext\": \"https://<your.verified.domain.name>/paymentGateway\" \n    }\n**2.  Run the command to get your merchant session**\n      \n\n    curl -k -vvvv --request POST -d \"@data.json\" --header \"Content-Type:application/json\" --cert PEM_FILE_PATH --key PRIVATE_KEY_FILE_PATH \"https://apple-pay-gateway.apple.com/paymentservices/paymentSession\"\n  Replace PEM_FILE_PATH and PRIVATE_KEY_FILE_PATH \n    \n**Sample node js code to set  the “paymentGateway'” endpoint (PAYMENT_GATEWAY_URL)**\n\nPlease make sure to return its response as json with value of status as STATUS_SUCCESS\n\nEg: https://test.com/paymentGateway\n    \n\n    api.post({path:'/paymentGateway'},\n    function paymentPost(req, res, next) {\n        res.json({\n          status:\"STATUS_SUCCESS\"\n        });\n      }\n    );\n**Steps to get the   PEM_FILE  and PRIVATE_KEY_FILE**\n\nRegister the Merchant ID\n 1. Login Developer Account\n 2. Select Certificates, identifiers & Profiles\n 3. Under Identifiers, Select Merchant ID\n 4. Enter the description and identifier, Click Continue\n  And Register it.\n  \nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Go to Register Merchant Identifier\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n 3. Download both Certificates and install Apple Payment Processing Certificate on system \n\nNote :-\nYou need a Certificate Signing Request (CSR) file from your Mac for all kinds of certificates, whereas for “Apple Payment Processing Certificate”, CSR type should be  a key-pair with ECC Algorithm and a key size of 256 bits.\n\nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Create a directory to store the keys\n      * mkdir keysncerts\n      * cd keysncerts/\n\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n      * keytool -genkeypair -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -keyalg RSA -keysize 2048\n       Enter key store password and all the details asked for:\n      * keytool -certreq -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -sigalg  SHA256withRSA > my_request.csr\n       \n 3. Creating .pv file(PRIVATE_KEY_FILE )\n      * Use the below command to generate the private key file\n      openssl pkcs12 -in fileforkeys.p12 -out pv.key -nodes -clcerts\n 4. Creating .pem file(PEM_FILE)\n      * Move merchant_id.cer to the keysncerts directory. Then convert and export it as a PEM file using below command\n       openssl x509 -inform DER -outform PEM -in merchant_id.cer -out server.crt.pem\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_AMOUNT__: The monetary amount of the line item. <br> __ITEM_LABEL__: A short, localized description of the line item. <br> __LABEL__: Provide a business name for the label field. Use the same business name people will see when they look for the charge on their bank or credit card statement. For example,'COMPANY, INC.' <br> __TOTAL_AMOUNT__: The total amount of the individual items( must be greater than or equal to zero) <br> __MERCHANT_ID__: The merchant identifier you registered with Apple for use with Apple Pay. <br> __MERCHANT_NAME__: The merchant name <br> __TWO_LETTER_ISO_COUNTRYCODE__: The merchant’s two-letter ISO 3166 country code. Eg: US <br> __THREE_LETTER_ISO_CURRENCYCODE__: The three-letter ISO 4217 currency code for the payment. Eg: USD <br> __MERCHANT_SESSION__: Apple Pay session object. Please find the below code snippet to see how it can be generated. <br> __PAYMENT_DISPLAY_TITLE__: The title of the received payment.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendPaymentMessage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#timepicker": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Timepicker",
+        "description": "This endpoint will send a timepicker to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"TIME_PICKER_EVENT_TITLE\", \"DURATION\", \"UTC_DATE_TIME\", \"UNIQUE_IDENTIFIER\", \"RECEIVED_MESSAGE_TITLE\", \"RECEIVED_MESSAGE_SUBTITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __TIME_PICKER_EVENT_TITLE__: Title of the event. <br> __DURATION__: An integer representing the duration of the time slot, in seconds. <br> __UNIQUE_IDENTIFIER__: A string field identifying the item. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. <br> __RECEIVED_MESSAGE_SUBTITLE__: The subtitle of the received message. <br> __UTC_DATE_TIME__: A UTC date string, represented by a valid date in ISO-8601 format and specified as absolute GMT +0000 date; for example 2021-07-29T06:30+0000.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendTimepickerMessage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#imessage": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - iMessage",
+        "description": "This endpoint will send a iMessage to service.\n\\\n The iMessage app extension has to be built and installed in the iPhone. The API when triggered will open the corresponding iMessage extension page within the iMessages app. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"APP_ID\", \"APP_NAME\", \"EXTENSION_BUNDLE_ID\", \"TEAM_ID\", \"TITLE\", \"SUB_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __APP_ID__: The App Store identifier of the iMessage extension.<br> __APP_NAME__: The name of the iMessage extension. <br> __EXTENSION_BUNDLE_ID__: The bundle id of the extension. <br> __TITLE__: A title to be displayed. <br> __SUB_TITLE__: A subtitle to be displayed. <br> __TEAM_ID__: Apple developer Team ID.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendiMessage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/send#auth": {
+      "post": {
+        "tags": [
+          "Send messages"
+        ],
+        "summary": "Send Message - Authentication using OAuth",
+        "description": "Please note that the oAuth URL, Token URL, Client Identifier has to be added under your account in https://register.apple.com/ and submit it for review.\nIn iOS 15, Apple enhanced its authentication method built into Messages for Business. Prior to iOS 15, the access token and parameters appeared in the URI request.\nExample (before iOS 15):\nserver.example.com/?grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\nStarting in iOS 15, the access token and parameters appear in the HTTP entity-body per the standard for OAuth 2.0 (see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3).\nEnsure oAuth provider can process the access token and parameters both in the URI request (to support earlier platforms) and on the HTTP entity-body (for iOS 15). \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"RESPONSE_TYPE\", \"SCOPE\", \"CLIENT_SECRET\", \"NONCE\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"ENCRYPTION_PUBLIC_KEY\", \"AUTH_DISPLAY_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\\\nSample Node JS code to get  the  key pair and nonce (ENCRYPTION_PUBLIC_KEY, ENCRYPTION_PRIVATE_KEY and NONCE)<br>\n\n    const crypto = require('crypto');\n    const { generateKeyPair } = require('crypto'); \n    \n    \n    generateKeyPair('ec', { \n    \tnamedCurve: 'secp384r1', // Options \n    \tpublicKeyEncoding: { \n    \t\ttype: 'spki', \n    \t\tformat: 'der'\n    \t}, \n    \tprivateKeyEncoding: { \n    \t\ttype: 'sec1', \n    \t\tformat: 'der'\n    \t} \n    \t}, \n    \t(err, publicKey, privateKey) => { // Callback function \n    \tif(!err) \n    \t{ \n    \t\tlet pubKey = publicKey.toString('base64')\n    \t\tconsole.info(\"ENCRYPTION_PUBLIC_KEY is: \", pubKey); \n    \t\tlet privKey = privateKey.toString('base64')\n    \t\tconsole.log(\"ENCRYPTION_PRIVATE_KEY  is: \", privKey); \n    \t\tlet state = crypto.randomBytes(32).toString('base64');\n    \t\tconsole.log(\"NONCE: \", state); \n    \t} \n    \telse\n    \t{ \n    \t\tconsole.log(\"Errr is: \", err); \n    \t} \n    \t\n    });\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __RESPONSE_TYPE__:  A string indicating the type of authentication request. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __SCOPE__: An array of scope items that specify the scope of the request.<br> __CLIENT_SECRET__:  A string indicating the secret provisioned by the authorization server. <br> __NONCE__: A string indicating the state of the authentication request. <br> __ENCRYPTION_PUBLIC_KEY__: A string indicating the secret provisioned by the authorization server. <br> __AUTH_DISPLAY_TITLE__: The title of the authentication message.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendAuth"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    },
+    "/message/retrieve": {
+      "post": {
+        "tags": [
+          "Media retrieve"
+        ],
+        "summary": "Retrieve Media data",
+        "description": "This endpoint will retrieve the media from the service.\n\nFor retrieving a single message, the user should fetch the messages and save thde details in application db or local storage for further use.\n  \\\nFor saving message details, following parameters should be passed in api uri - unified://CONNECTION_IDENTIFIER/FOLDER_NAME header - true and entriesperpage\n  \\\nFor fetching single message the uri param as follows unified://CONNECTION_IDENTIFIER/FOLDER_NAME/ MESSAGE_ID\n\n`Remember — the API requires authentication!`\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __URL__: URL is the encodeURIComponent of originalEvent->attachments[0]->url in the original event <br> __SIGNATURE__: Signature is the encodeURIComponent of originalEvent->attachments[0]->signature in the original event <br> __OWNER__: Owner is the encodeURIComponent of originalEvent->attachments[0]->owner in the original event <br> __MIME_TYPE__: Mime-type is the encodeURIComponent of originalEvent->attachments[0]->mime-type  in the original event <br> __KEY__: Key is the encodeURIComponent of originalEvent->attachments[0]->key  in the original event <br> __SIZE__: Size is the encodeURIComponent of originalEvent->attachments[0]->size  in the original event <br> __NAME__: Name is the encodeURIComponent of originalEvent->attachments[0]->name  in the original event",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/retrieveMessage"
+            }
+          }
+        ],
+        "security": [
+          {
+            "userAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Api Success",
+            "schema": {
+              "$ref": "#/definitions/retrieveMessageResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required!"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "userAuth": {
+      "description": "# User Authentication\n\nUse **User accesskey** as *Username* and **User Secret** as *Password*\n",
+      "type": "basic"
+    }
+  },
+  "definitions": {
+    "sendMessageText": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "text/plain",
+              "data": "MESSAGE_BODY",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "body",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageImage": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "CONTENT_TYPE",
+              "size": "IMAGE_LINK_SIZE",
+              "type": "image_link",
+              "name": "FILE_NAME",
+              "data": "IMAGE_LINK",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageImagewithtext": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "CONTENT_TYPE",
+              "size": "IMAGE_LINK_SIZE",
+              "type": "image_link",
+              "name": "FILE_NAME",
+              "data": "IMAGE_LINK",
+              "sort": 0
+            },
+            {
+              "id": "1",
+              "contentType": "CONTENT_TYPE",
+              "data": "MESSAGE_BODY",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "body",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageDocument": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "CONTENT_TYPE",
+              "data": "DOCUMENT_LINK",
+              "name": "FILE_NAME",
+              "size": "DOCUMENT_LINK_SIZE",
+              "type": "file",
+              "sort": 0
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageAudio": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "CONTENT_TYPE",
+              "data": "AUDIO_LINK",
+              "size": "AUDIO_LINK_SIZE",
+              "name": "FILE_NAME",
+              "type": "audio_link",
+              "sort": 0
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageVideo": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "CONTENT_TYPE",
+              "data": "VIDEO_LINK",
+              "size": "VIDEO_LINK_SIZE",
+              "type": "video_link",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageLink": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "text/plain",
+              "data": "WEB_URL",
+              "size": "WEB_URL_SIZE",
+              "type": "body",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageListpickerSingle": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+              "size": 1000,
+              "type": "body",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "size": 1000,
+              "type": "list_picker/text",
+              "sort": 1
+            },
+            {
+              "id": "3",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+              "size": 1000,
+              "type": "header",
+              "sort": 2
+            },
+            {
+              "id": "4",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+              "size": 1000,
+              "type": "footer",
+              "sort": 3
+            },
+            {
+              "id": "5",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
+              "size": 1000,
+              "type": "received_message",
+              "sort": 4
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageListpickerMultiple": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+              "size": 1000,
+              "type": "body",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "size": 1000,
+              "type": "list_picker/text",
+              "sort": 1
+            },
+            {
+              "id": "3",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "size": 1000,
+              "type": "list_picker/text",
+              "sort": 2
+            },
+            {
+              "id": "4",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+              "size": 1000,
+              "type": "header",
+              "sort": 3
+            },
+            {
+              "id": "5",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+              "size": 1000,
+              "type": "footer",
+              "sort": 4
+            },
+            {
+              "id": "6",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
+              "size": 1000,
+              "type": "received_message",
+              "sort": 5
+            }
+          ]
+        }
+      }
+    },
+    "sendMessageReplyButton": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+              "size": 1000,
+              "type": "body",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"buttons\":[{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "size": 1000,
+              "type": "list_picker/button",
+              "sort": 1
+            },
+            {
+              "id": "3",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
+              "size": 1000,
+              "type": "header",
+              "sort": 2
+            },
+            {
+              "id": "4",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
+              "size": 1000,
+              "type": "footer",
+              "sort": 3
+            }
+          ]
+        }
+      }
+    },
+    "retrieveMessage": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "example": "unified://UNIQUE_CONNECTION_IDENTIFIER?url=URL&owner=OWNER&signature=SIGNATURE&key=KEY&size=SIZE&name=NAME&mimeType=MIME_TYPE"
+        }
+      }
+    },
+    "retrieveMessageResponse": {
+      "type": "object",
+      "properties": {
+        "Status": {
+          "$ref": "#/definitions/sendMessageResponseStatus"
+        },
+        "messages": {
+          "type": "object",
+          "example": {
+            "UNIQUE_CONNECTION_IDENTIFIER": [
+              {
+                "uri": "",
+                "mid": "",
+                "timestamp": 0,
+                "sender": {
+                  "connector": "",
+                  "address": "",
+                  "uri": ""
+                },
+                "returnPath": {
+                  "connector": "",
+                  "address": "",
+                  "uri": ""
+                },
+                "date": 0,
+                "userAgent": "",
+                "parts": [
+                  {
+                    "id": "0",
+                    "contentType": "CONTENT_TYPE",
+                    "type": "body",
+                    "name": "FILE_NAME",
+                    "data": "BASE64_DATA",
+                    "size": 1000,
+                    "sort": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "description": "Messages description",
+          "properties": {}
+        }
+      }
+    },
+    "SendPaymentMessage": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "0",
+              "contentType": "text/plain",
+              "data": "{\"paymentRequest\":{\"lineItems\":[{\"label\":\"ITEM_LABEL\",\"amount\":\"ITEM_AMOUNT\",\"type\":\"final\"}],\"total\":{\"label\":\"LABEL\",\"amount\":\"TOTAL_AMOUNT\",\"type\":\"final\"},\"applePay\":{\"merchantIdentifier\":\"MERCHANT_ID\",\"supportedNetworks\":[\"amex\",\"visa\",\"discover\",\"masterCard\",\"chinaUnionPay\",\"interac\",\"privateLabel\"],\"merchantCapabilities\":[\"supportsDebit\",\"supportsCredit\",\"supportsEMV\",\"supports3DS\"]},\"merchantName\":\"MERCHANT_NAME\",\"countryCode\":\"TWO_LETTER_ISO_COUNTRYCODE\",\"currencyCode\":\"THREE_LETTER_ISO_CURRENCYCODE\"},\"merchantSession\":MERCHANT_SESSION,\"endpoints\":{\"paymentGatewayUrl\":\"MY_PAYMENT_GATEWAY_URL\"}}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "payment",
+              "sort": 0
+            },
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"PAYMENT_DISPLAY_TITLE\",\"style\":\"small\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "received_message",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "SendTimepickerMessage": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "body",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"TIME_PICKER_EVENT_TITLE\",\"timeslots\":[{\"duration\":\"DURATION\",\"startTime\":\"UTC_DATE_TIME\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"duration\":\"DURATION\",\"startTime\":\"UTC_DATE_TIME\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"duration\":\"DURATION\",\"startTime\":\"UTC_DATE_TIME\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"duration\":\"DURATION\",\"startTime\":\"UTC_DATE_TIME\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "list_picker/time",
+              "sort": 1
+            },
+            {
+              "id": "3",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\",\"subtitle\":\"RECEIVED_MESSAGE_SUBTITLE\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "received_message",
+              "sort": 2
+            }
+          ]
+        }
+      }
+    },
+    "SendiMessage": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "{\"appId\":\"APP_ID\",\"appName\":\"APP_NAME\",\"bid\":\"com.apple.messages.MSMessageExtensionBalloonPlugin:TEAM_ID:EXTENSION_BUNDLE_ID}\",\"url\":\"URL\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "card/imessage",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"TITLE\",\"subtitle\":\"SUB_TITLE\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "received_message",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "SendAuth": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/sendMessage"
+        }
+      },
+      "example": {
+        "message": {
+          "sender": {
+            "address": "test"
+          },
+          "receivers": [
+            {
+              "name": "Me",
+              "address": "SOURCE_ID",
+              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+            }
+          ],
+          "subject": "",
+          "parts": [
+            {
+              "id": "1",
+              "contentType": "text/plain",
+              "data": "{\"response_type\":\"RESPONSE_TYPE\",\"scope\":[SCOPE],\"client_secret\":\"CLIENT_SECRET\",\"nonce\":\"NONCE\",\"encryption_key\":\"ENCRYPTION_PUBLIC_KEY\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "auth",
+              "sort": 0
+            },
+            {
+              "id": "2",
+              "contentType": "text/plain",
+              "data": "{\"title\":\"AUTH_DISPLAY_TITLE\",\"subtitle\":\"SUB_TITLE\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "received_message",
+              "sort": 1
+            }
+          ]
+        }
+      }
+    },
+    "successMessage": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "connectionAdd": {
+      "type": "object",
+      "required": [
+        "uri",
+        "name"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "example": "applebusinesschat://SOURCE_ID@apple.com?bot_id=DESTINATION_ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "UNIQUE_CONNECTION_IDENTIFIER"
+        }
+      }
+    },
+    "connectionAddResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200,
+          "description": "Status of Api"
+        },
+        "info": {
+          "type": "string",
+          "example": "200 OK",
+          "description": "Info about status"
+        }
+      }
+    },
+    "sendMessageResponse": {
+      "type": "object",
+      "properties": {
+        "Status": {
+          "$ref": "#/definitions/sendMessageResponseStatus"
+        },
+        "URIs": {
+          "type": "array",
+          "description": "Send list",
+          "items": {
+            "type": "string",
+            "example": "applebusinesschat://apple.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
+          }
+        }
+      }
+    },
+    "sendMessage_receivers": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "Connector": {
+          "type": "string"
+        }
+      }
+    },
+    "sendMessage_message_parts": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "number"
+        }
+      }
+    },
+    "sendMessage": {
+      "type": "object",
+      "properties": {
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessage_receivers"
+          }
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sendMessage_message_parts"
+          }
+        }
+      }
+    },
+    "sendMessageResponseStatus_UNIQUE_CONNECTION_IDENTIFIER": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "200",
+          "description": "status"
+        },
+        "info": {
+          "type": "string",
+          "example": "OK",
+          "description": "staus"
+        }
+      }
+    },
+    "sendMessageResponseStatus": {
+      "type": "object",
+      "properties": {
+        "UNIQUE_CONNECTION_IDENTIFIER": {
+          "$ref": "#/definitions/sendMessageResponseStatus_UNIQUE_CONNECTION_IDENTIFIER"
+        }
+      }
+    }
+  },
+  "responses": {
+    "UnauthorizedError": {
+      "description": "Authentication required!"
+    },
+    "successMessage": {
+      "description": "A User object",
+      "schema": {
+        "$ref": "#/definitions/successMessage"
+      }
+    },
+    "retrieveMessage": {
+      "description": "Api Success",
+      "schema": {
+        "$ref": "#/definitions/retrieveMessageResponse"
+      }
+    }
+  }
+}
