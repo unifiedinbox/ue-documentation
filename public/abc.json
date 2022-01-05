@@ -283,7 +283,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Rick Link",
-        "description": "This endpoint will send a Rich Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"WEB_URL\" and \"WEB_URL_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a Rich Link message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is body.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"WEB_URL\" and \"WEB_URL_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -319,12 +319,12 @@
           "Send messages"
         ],
         "summary": "Send Message - TextPickerSingle",
-        "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\",  \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a TextPickerSingle message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is list_picker/text.\n\\\nTo send a new message \"SOURCE_ID\",  \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"RECEIVED_MESSAGE_TITLE\",\"RECEIVED_MESSAGE_SUBTITLE\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted.The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.<br> __RECEIVED_MESSAGE_SUBTITLE__: The subtitle of the received message",
             "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageListpickerSingle"
@@ -355,12 +355,12 @@
           "Send messages"
         ],
         "summary": "Send Message - TextPickerMultiple",
-        "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\" ,\"RECEIVED_MESSAGE_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a TextPickerMultiple message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is list_picker/text.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"LIST_PICKER_TITLE\",\"ITEM_TITLE\",\"ITEM_SUBTITLE\",\"UNIQUE_IDENTIFIER\",\"RECEIVED_MESSAGE_TITLE\",\"RECEIVED_MESSAGE_SUBTITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 10 sections are permitted. The body, header, footer and sections will be a stringified object.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __MESSAGE_HEADER__: The header data of the list picker item. Text for the header. Maximum of 60 characters <br> __MESSAGE_FOOTER__: The footer data of the list picker item There’s a maximum of 60 characters. <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.",
+            "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __SOURCE_ID__: The user id to which the message has to be sent <br> __LIST_PICKER_TITLE__: Title of the list picker There’s a maximum of 24 characters. <br> __MESSAGE_BODY__: The body of the list picker item.   There’s a maximum of 1024 characters. <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __ITEM_TITLE__: The title of the list picker item <br> __ITEM_SUBTITLE__: The subtitle of the list picker item. Subtile is optional. <br> __UNIQUE_IDENTIFIER__: Unique identifier. Maximum of 200 characters <br> __RECEIVED_MESSAGE_TITLE__: The title of the received message. There’s a maximum of 20 characters.<br> __RECEIVED_MESSAGE_SUBTITLE__: The subtitle of the received message",
             "required": true,
             "schema": {
               "$ref": "#/definitions/sendMessageListpickerMultiple"
@@ -391,7 +391,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Button",
-        "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"UNIQUE_IDENTIFIER\",\"MESSAGE_HEADER\" ,\"MESSAGE_FOOTER\"  and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is button/postback.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\", \"BUTTON_TITLE\", \"BUTTON_PAYLOAD\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\nThere is a minimum of 1 and maximum of 3 buttons are permitted. The body, header, footer and buttons will be a stringified object.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -427,7 +427,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Payment",
-        "description": "This endpoint will send a payment to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"ITEM_LABEL\", \"ITEM_AMOUNT\", \"LABEL\", \"TOTAL_AMOUNT\", \"MERCHANT_ID\", \"MERCHANT_NAME\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"THREE_LETTER_ISO_CURRENCYCODE\", \"MY_PAYMENT_GATEWAY_URL\",  \"PAYMENT_DISPLAY_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\nPlease note that the Merchant ID has to be added under your account in https://register.apple.com/ and submit it for review.\n`Remember — the API requires authentication!`\n\\\nSample node js code to get  the  merchant session to be used the payment API(MERCHANT_SESSION )<br>\n\n    const axios = require('axios');\n    const fs = require('fs'); \n    \n    \n    const MERCHANT_ID = \"<your.merchant.id>\" \n    const DOMAIN_NAME = \"<your.verified.domain.name>\"  ( eg test.com - without https)\n    const MERCHANT_NAME = \"<your merchant name>\"\n    \n    const PAYMENT_GATEWAY_URL = \"https://<your.verified.domain.name>/paymentGateway\"\n    const APPLE_PAY_MERCHANT_SESSION_GATEWAY = 'https://apple-pay-gateway.apple.com/paymentservices/paymentSession';\n    \n    //please find below the steps to generate these 2 files\n    const PEM_FILE_PATH = \"<local path to your .pem file>\"\n    const PRIVATE_KEY_FILE_PATH = \"<local path to your private .key file>\"\n    \n    let payload = {\n      \"merchantIdentifier\": MERCHANT_ID,\n      \"domainName\":DOMAIN_NAME,\n      \"displayName\": \"MERCHANT_NAME\",\n      \"initiative\": \"messaging\",\n      \"initiativeContext\": PAYMENT_GATEWAY_URL\n    }\n    \n    const result = await axios.post(\n      APPLE_PAY_MERCHANT_SESSION_GATEWAY,\n      payload,\n      {\n        httpsAgent: new https.Agent({\n        rejectUnauthorized: false,\n        'cert': fs.readFileSync(PEM_FILE_PATH),\n        'key': fs.readFileSync(PRIVATE_KEY_FILE_PATH),\n        })\n      }\n    )\n    MERCHANT_SESSION = result.data;\n**1.  Generate the payload file.**\n  Save the below payload in a file and name it as “data.json”\n      \n    {\n       \"merchantIdentifier\": <SHA256 hash of your text merchant identifier>,\n       \"domainName\": <domain name associated with Apple Pay merchant account>,\n       \"displayName\": <Merchant name in human readable form>,\n       \"initiative\": \"messaging\",\n       \"initiativeContext\": \"https://<your.verified.domain.name>/paymentGateway\" \n    }\n**2.  Run the command to get your merchant session**\n      \n\n    curl -k -vvvv --request POST -d \"@data.json\" --header \"Content-Type:application/json\" --cert PEM_FILE_PATH --key PRIVATE_KEY_FILE_PATH \"https://apple-pay-gateway.apple.com/paymentservices/paymentSession\"\n  Replace PEM_FILE_PATH and PRIVATE_KEY_FILE_PATH \n    \n**Sample node js code to set  the “paymentGateway'” endpoint (PAYMENT_GATEWAY_URL)**\n\nPlease make sure to return its response as json with value of status as STATUS_SUCCESS\n\nEg: https://test.com/paymentGateway\n    \n\n    api.post({path:'/paymentGateway'},\n    function paymentPost(req, res, next) {\n        res.json({\n          status:\"STATUS_SUCCESS\"\n        });\n      }\n    );\n**Steps to get the   PEM_FILE  and PRIVATE_KEY_FILE**\n\nRegister the Merchant ID\n 1. Login Developer Account\n 2. Select Certificates, identifiers & Profiles\n 3. Under Identifiers, Select Merchant ID\n 4. Enter the description and identifier, Click Continue\n  And Register it.\n  \nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Go to Register Merchant Identifier\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n 3. Download both Certificates and install Apple Payment Processing Certificate on system \n\nNote :-\nYou need a Certificate Signing Request (CSR) file from your Mac for all kinds of certificates, whereas for “Apple Payment Processing Certificate”, CSR type should be  a key-pair with ECC Algorithm and a key size of 256 bits.\n\nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Create a directory to store the keys\n      * mkdir keysncerts\n      * cd keysncerts/\n\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n      * keytool -genkeypair -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -keyalg RSA -keysize 2048\n       Enter key store password and all the details asked for:\n      * keytool -certreq -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -sigalg  SHA256withRSA > my_request.csr\n       \n 3. Creating .pv file(PRIVATE_KEY_FILE )\n      * Use the below command to generate the private key file\n      openssl pkcs12 -in fileforkeys.p12 -out pv.key -nodes -clcerts\n 4. Creating .pem file(PEM_FILE)\n      * Move merchant_id.cer to the keysncerts directory. Then convert and export it as a PEM file using below command\n       openssl x509 -inform DER -outform PEM -in merchant_id.cer -out server.crt.pem\n",
+        "description": "This endpoint will send a payment to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is payment.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"ITEM_LABEL\", \"ITEM_AMOUNT\", \"LABEL\", \"TOTAL_AMOUNT\", \"MERCHANT_ID\", \"MERCHANT_NAME\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"THREE_LETTER_ISO_CURRENCYCODE\", \"MY_PAYMENT_GATEWAY_URL\",  \"PAYMENT_DISPLAY_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\nPlease note that the Merchant ID has to be added under your account in https://register.apple.com/ and submit it for review.\n`Remember — the API requires authentication!`\n\\\nSample node js code to get  the  merchant session to be used the payment API(MERCHANT_SESSION )<br>\n\n    const axios = require('axios');\n    const fs = require('fs'); \n    \n    \n    const MERCHANT_ID = \"<your.merchant.id>\" \n    const DOMAIN_NAME = \"<your.verified.domain.name>\"  ( eg test.com - without https)\n    const MERCHANT_NAME = \"<your merchant name>\"\n    \n    const PAYMENT_GATEWAY_URL = \"https://<your.verified.domain.name>/paymentGateway\"\n    const APPLE_PAY_MERCHANT_SESSION_GATEWAY = 'https://apple-pay-gateway.apple.com/paymentservices/paymentSession';\n    \n    //please find below the steps to generate these 2 files\n    const PEM_FILE_PATH = \"<local path to your .pem file>\"\n    const PRIVATE_KEY_FILE_PATH = \"<local path to your private .key file>\"\n    \n    let payload = {\n      \"merchantIdentifier\": MERCHANT_ID,\n      \"domainName\":DOMAIN_NAME,\n      \"displayName\": \"MERCHANT_NAME\",\n      \"initiative\": \"messaging\",\n      \"initiativeContext\": PAYMENT_GATEWAY_URL\n    }\n    \n    const result = await axios.post(\n      APPLE_PAY_MERCHANT_SESSION_GATEWAY,\n      payload,\n      {\n        httpsAgent: new https.Agent({\n        rejectUnauthorized: false,\n        'cert': fs.readFileSync(PEM_FILE_PATH),\n        'key': fs.readFileSync(PRIVATE_KEY_FILE_PATH),\n        })\n      }\n    )\n    MERCHANT_SESSION = result.data;\n**1.  Generate the payload file.**\n  Save the below payload in a file and name it as “data.json”\n      \n    {\n       \"merchantIdentifier\": <SHA256 hash of your text merchant identifier>,\n       \"domainName\": <domain name associated with Apple Pay merchant account>,\n       \"displayName\": <Merchant name in human readable form>,\n       \"initiative\": \"messaging\",\n       \"initiativeContext\": \"https://<your.verified.domain.name>/paymentGateway\" \n    }\n**2.  Run the command to get your merchant session**\n      \n\n    curl -k -vvvv --request POST -d \"@data.json\" --header \"Content-Type:application/json\" --cert PEM_FILE_PATH --key PRIVATE_KEY_FILE_PATH \"https://apple-pay-gateway.apple.com/paymentservices/paymentSession\"\n  Replace PEM_FILE_PATH and PRIVATE_KEY_FILE_PATH \n    \n**Sample node js code to set  the “paymentGateway'” endpoint (PAYMENT_GATEWAY_URL)**\n\nPlease make sure to return its response as json with value of status as STATUS_SUCCESS\n\nEg: https://test.com/paymentGateway\n    \n\n    api.post({path:'/paymentGateway'},\n    function paymentPost(req, res, next) {\n        res.json({\n          status:\"STATUS_SUCCESS\"\n        });\n      }\n    );\n**Steps to get the   PEM_FILE  and PRIVATE_KEY_FILE**\n\nRegister the Merchant ID\n 1. Login Developer Account\n 2. Select Certificates, identifiers & Profiles\n 3. Under Identifiers, Select Merchant ID\n 4. Enter the description and identifier, Click Continue\n  And Register it.\n  \nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Go to Register Merchant Identifier\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n 3. Download both Certificates and install Apple Payment Processing Certificate on system \n\nNote :-\nYou need a Certificate Signing Request (CSR) file from your Mac for all kinds of certificates, whereas for “Apple Payment Processing Certificate”, CSR type should be  a key-pair with ECC Algorithm and a key size of 256 bits.\n\nCreate  Payment Processing Certificate and Apple Pay Merchant Identity Certificate\n 1. Create a directory to store the keys\n      * mkdir keysncerts\n      * cd keysncerts/\n\n 2. Create a Apple Payment Processing Certificate & Apple Pay Merchant Identity Certificate (  merchant_id.cer )\n      * keytool -genkeypair -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -keyalg RSA -keysize 2048\n       Enter key store password and all the details asked for:\n      * keytool -certreq -keystore fileforkeys.p12 -storetype pkcs12 -alias keyone -sigalg  SHA256withRSA > my_request.csr\n       \n 3. Creating .pv file(PRIVATE_KEY_FILE )\n      * Use the below command to generate the private key file\n      openssl pkcs12 -in fileforkeys.p12 -out pv.key -nodes -clcerts\n 4. Creating .pem file(PEM_FILE)\n      * Move merchant_id.cer to the keysncerts directory. Then convert and export it as a PEM file using below command\n       openssl x509 -inform DER -outform PEM -in merchant_id.cer -out server.crt.pem\n",
         "parameters": [
           {
             "in": "body",
@@ -463,7 +463,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Timepicker",
-        "description": "This endpoint will send a timepicker to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"TIME_PICKER_EVENT_TITLE\", \"DURATION\", \"UTC_DATE_TIME\", \"UNIQUE_IDENTIFIER\", \"RECEIVED_MESSAGE_TITLE\", \"RECEIVED_MESSAGE_SUBTITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a timepicker to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is list_picker/time.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"TIME_PICKER_EVENT_TITLE\", \"DURATION\", \"UTC_DATE_TIME\", \"UNIQUE_IDENTIFIER\", \"RECEIVED_MESSAGE_TITLE\", \"RECEIVED_MESSAGE_SUBTITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -499,7 +499,7 @@
           "Send messages"
         ],
         "summary": "Send Message - iMessage",
-        "description": "This endpoint will send a iMessage to service.\n\\\n The iMessage app extension has to be built and installed in the iPhone. The API when triggered will open the corresponding iMessage extension page within the iMessages app. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"APP_ID\", \"APP_NAME\", \"EXTENSION_BUNDLE_ID\", \"TEAM_ID\", \"TITLE\", \"SUB_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+        "description": "This endpoint will send a iMessage to service.\n\\\n The iMessage app extension has to be built and installed in the iPhone. The API when triggered will open the corresponding iMessage extension page within the iMessages app. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is card/imessage.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"APP_ID\", \"APP_NAME\", \"EXTENSION_BUNDLE_ID\", \"TEAM_ID\", \"TITLE\", \"SUB_TITLE\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
         "parameters": [
           {
             "in": "body",
@@ -535,7 +535,7 @@
           "Send messages"
         ],
         "summary": "Send Message - Authentication using OAuth",
-        "description": "Please note that the oAuth URL, Token URL, Client Identifier has to be added under your account in https://register.apple.com/ and submit it for review.\nIn iOS 15, Apple enhanced its authentication method built into Messages for Business. Prior to iOS 15, the access token and parameters appeared in the URI request.\nExample (before iOS 15):\nserver.example.com/?grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\nStarting in iOS 15, the access token and parameters appear in the HTTP entity-body per the standard for OAuth 2.0 (see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3).\nEnsure oAuth provider can process the access token and parameters both in the URI request (to support earlier platforms) and on the HTTP entity-body (for iOS 15). \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is video_link.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"RESPONSE_TYPE\", \"SCOPE\", \"CLIENT_SECRET\", \"NONCE\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"ENCRYPTION_PUBLIC_KEY\", \"AUTH_DISPLAY_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\\\nSample Node JS code to get  the  key pair and nonce (ENCRYPTION_PUBLIC_KEY, ENCRYPTION_PRIVATE_KEY and NONCE)<br>\n\n    const crypto = require('crypto');\n    const { generateKeyPair } = require('crypto'); \n    \n    \n    generateKeyPair('ec', { \n    \tnamedCurve: 'secp384r1', // Options \n    \tpublicKeyEncoding: { \n    \t\ttype: 'spki', \n    \t\tformat: 'der'\n    \t}, \n    \tprivateKeyEncoding: { \n    \t\ttype: 'sec1', \n    \t\tformat: 'der'\n    \t} \n    \t}, \n    \t(err, publicKey, privateKey) => { // Callback function \n    \tif(!err) \n    \t{ \n    \t\tlet pubKey = publicKey.toString('base64')\n    \t\tconsole.info(\"ENCRYPTION_PUBLIC_KEY is: \", pubKey); \n    \t\tlet privKey = privateKey.toString('base64')\n    \t\tconsole.log(\"ENCRYPTION_PRIVATE_KEY  is: \", privKey); \n    \t\tlet state = crypto.randomBytes(32).toString('base64');\n    \t\tconsole.log(\"NONCE: \", state); \n    \t} \n    \telse\n    \t{ \n    \t\tconsole.log(\"Errr is: \", err); \n    \t} \n    \t\n    });\n",
+        "description": "Please note that the oAuth URL, Token URL, Client Identifier has to be added under your account in https://register.apple.com/ and submit it for review.\nIn iOS 15, Apple enhanced its authentication method built into Messages for Business. Prior to iOS 15, the access token and parameters appeared in the URI request.\nExample (before iOS 15):\nserver.example.com/?grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\nStarting in iOS 15, the access token and parameters appear in the HTTP entity-body per the standard for OAuth 2.0 (see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3).\nEnsure oAuth provider can process the access token and parameters both in the URI request (to support earlier platforms) and on the HTTP entity-body (for iOS 15). \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is auth.\n\\\nTo send a new message \"SOURCE_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"RESPONSE_TYPE\", \"SCOPE\", \"CLIENT_SECRET\", \"NONCE\", \"TWO_LETTER_ISO_COUNTRYCODE\", \"ENCRYPTION_PUBLIC_KEY\", \"AUTH_DISPLAY_TITLE\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\\\nSample Node JS code to get  the  key pair and nonce (ENCRYPTION_PUBLIC_KEY, ENCRYPTION_PRIVATE_KEY and NONCE)<br>\n\n    const crypto = require('crypto');\n    const { generateKeyPair } = require('crypto'); \n    \n    \n    generateKeyPair('ec', { \n    \tnamedCurve: 'secp384r1', // Options \n    \tpublicKeyEncoding: { \n    \t\ttype: 'spki', \n    \t\tformat: 'der'\n    \t}, \n    \tprivateKeyEncoding: { \n    \t\ttype: 'sec1', \n    \t\tformat: 'der'\n    \t} \n    \t}, \n    \t(err, publicKey, privateKey) => { // Callback function \n    \tif(!err) \n    \t{ \n    \t\tlet pubKey = publicKey.toString('base64')\n    \t\tconsole.info(\"ENCRYPTION_PUBLIC_KEY is: \", pubKey); \n    \t\tlet privKey = privateKey.toString('base64')\n    \t\tconsole.log(\"ENCRYPTION_PRIVATE_KEY  is: \", privKey); \n    \t\tlet state = crypto.randomBytes(32).toString('base64');\n    \t\tconsole.log(\"NONCE: \", state); \n    \t} \n    \telse\n    \t{ \n    \t\tconsole.log(\"Errr is: \", err); \n    \t} \n    \t\n    });\n",
         "parameters": [
           {
             "in": "body",
@@ -877,62 +877,43 @@
         }
       },
       "example": {
-        "message": {
-          "sender": {
-            "address": "test"
-          },
-          "receivers": [
-            {
-              "name": "Me",
-              "address": "SOURCE_ID",
-              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
-            }
-          ],
-          "subject": "",
-          "parts": [
-            {
-              "id": "1",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
-              "size": 1000,
-              "type": "body",
-              "sort": 0
-            },
-            {
-              "id": "2",
-              "contentType": "text/plain",
-              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
-              "size": 1000,
-              "type": "list_picker/text",
-              "sort": 1
-            },
-            {
-              "id": "3",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
-              "size": 1000,
-              "type": "header",
-              "sort": 2
-            },
-            {
-              "id": "4",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
-              "size": 1000,
-              "type": "footer",
-              "sort": 3
-            },
-            {
-              "id": "5",
-              "contentType": "text/plain",
-              "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
-              "size": 1000,
-              "type": "received_message",
-              "sort": 4
-            }
-          ]
+        "message":{
+            "receivers":[
+                {
+                    "name":"name",
+                    "address":"SOURCE_ID",
+                    "Connector":"UNIQUE_CONNECTION_IDENTIFIER",
+                    "type":""
+                }
+            ],
+            "parts":[
+                {
+                    "id":"1",
+                    "contentType":"text/plain",
+                    "data":"[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"body",
+                    "sort":0
+                },
+                {
+                    "id":"2",
+                    "contentType":"text/plain",
+                    "data":"{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"list_picker/text",
+                    "sort":1
+                },
+                {
+                    "id":"3",
+                    "contentType":"text/plain",
+                    "data":"{\"title\":\"RECEIVED_MESSAGE_TITLE\",\"subtitle\":\"RECEIVED_MESSAGE_SUBTITLE\"}",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"received_message",
+                    "sort":2
+                }
+            ]
         }
-      }
+    }
     },
     "sendMessageListpickerMultiple": {
       "type": "object",
@@ -945,70 +926,51 @@
         }
       },
       "example": {
-        "message": {
-          "sender": {
-            "address": "test"
-          },
-          "receivers": [
-            {
-              "name": "Me",
-              "address": "SOURCE_ID",
-              "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
-            }
-          ],
-          "subject": "",
-          "parts": [
-            {
-              "id": "1",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
-              "size": 1000,
-              "type": "body",
-              "sort": 0
-            },
-            {
-              "id": "2",
-              "contentType": "text/plain",
-              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
-              "size": 1000,
-              "type": "list_picker/text",
-              "sort": 1
-            },
-            {
-              "id": "3",
-              "contentType": "text/plain",
-              "data": "{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
-              "size": 1000,
-              "type": "list_picker/text",
-              "sort": 2
-            },
-            {
-              "id": "4",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
-              "size": 1000,
-              "type": "header",
-              "sort": 3
-            },
-            {
-              "id": "5",
-              "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
-              "size": 1000,
-              "type": "footer",
-              "sort": 4
-            },
-            {
-              "id": "6",
-              "contentType": "text/plain",
-              "data": "{\"title\":\"RECEIVED_MESSAGE_TITLE\"}",
-              "size": 1000,
-              "type": "received_message",
-              "sort": 5
-            }
-          ]
+        "message":{
+            "receivers":[
+                {
+                    "name":"name",
+                    "address":"SOURCE_ID",
+                    "Connector":"UNIQUE_CONNECTION_IDENTIFIER",
+                    "type":""
+                }
+            ],
+            "parts":[
+                {
+                    "id":"1",
+                    "contentType":"text/plain",
+                    "data":"[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"body",
+                    "sort":0
+                },
+                {
+                    "id":"2",
+                    "contentType":"text/plain",
+                    "data":"{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"list_picker/text",
+                    "sort":1
+                },
+                {
+                    "id":"3",
+                    "contentType":"text/plain",
+                    "data":"{\"title\":\"LIST_PICKER_TITLE\",\"sections\":[{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"ITEM_TITLE\",\"subtitle\":\"ITEM_SUBTITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"list_picker/text",
+                    "sort":2
+                },
+                {
+                    "id":"4",
+                    "contentType":"text/plain",
+                    "data":"{\"title\":\"RECEIVED_MESSAGE_TITLE\",\"subtitle\":\"RECEIVED_MESSAGE_SUBTITLE\"}",
+                    "size":"MESSAGE_BODY_SIZE",
+                    "type":"received_message",
+                    "sort":3
+                }
+            ]
         }
-      }
+    }
     },
     "sendMessageReplyButton": {
       "type": "object",
@@ -1037,33 +999,33 @@
             {
               "id": "1",
               "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_BODY\"}]",
-              "size": 1000,
+              "data": "MESSAGE_BODY",
+              "size": "MESSAGE_BODY_SIZE",
               "type": "body",
               "sort": 0
             },
             {
               "id": "2",
               "contentType": "text/plain",
-              "data": "{\"buttons\":[{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"},{\"title\":\"BUTTON_TITLE\",\"id\":\"UNIQUE_IDENTIFIER\"}]}",
-              "size": 1000,
-              "type": "list_picker/button",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "button/postback",
               "sort": 1
             },
             {
               "id": "3",
               "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_HEADER\"}]",
-              "size": 1000,
-              "type": "header",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "button/postback",
               "sort": 2
             },
             {
               "id": "4",
               "contentType": "text/plain",
-              "data": "[{\"type\":\"text\",\"text\":\"MESSAGE_FOOTER\"}]",
-              "size": 1000,
-              "type": "footer",
+              "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+              "size": "MESSAGE_BODY_SIZE",
+              "type": "button/postback",
               "sort": 3
             }
           ]

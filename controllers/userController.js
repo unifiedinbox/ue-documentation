@@ -6,6 +6,7 @@ let line = require('../public/line.json');
 let viber = require('../public/viberpa.json');
 let wabaSandbox = require('../public/whatsappSandbox.json');
 let abc = require('../public/abc.json');
+let gbm = require('../public/gbm.json');
 
 let CronController = {
         getJsonData:function (req, res, next) {
@@ -28,6 +29,8 @@ let CronController = {
                                 return res.send(wabaSandbox);
                         }else if(req.query.connector == 'abc'){
                                 return res.send(abc);
+                        }else if(req.query.connector == 'gbm'){
+                                return res.send(gbm);
                         }else{
                                 return res.send(wa);
                         }
