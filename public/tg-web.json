@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Telegram API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Telegram API! You can use our API to access UnificationEngine® API endpoints, which can communicate with Telegram. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
     "version": "v2",
     "title": "Telegram"
   },

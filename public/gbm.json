@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Google Business Messages API! You can use our API to access UnificationEngine® API endpoints, which can communicate with Apple Messages for Business.\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® Google Business Messages API! You can use our API to access UnificationEngine® API endpoints, which can communicate with Google Business Messages.\n",
     "version": "v2",
     "title": "Google Business Messages"
   },

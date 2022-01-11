@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® API! You can use our API to access UnificationEngine® API endpoints, which can communicate with WhatsApp. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
+    "description": "\n# Introduction\n\nWelcome to the UnificationEngine® API! You can use our API to access UnificationEngine® API endpoints, which can communicate with different channels. You can even create your own connector and link it with UnificationEngine® in the [developer portal](https://developer.unificationengine.com/)\n",
     "version": "1.0.0",
     "title": "Webhook Payload"
   },
