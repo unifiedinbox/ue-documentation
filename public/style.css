@@ -11,7 +11,8 @@
 .UELogo{
     width: 240px;
     height: auto;
-    float: left;
+    margin-top: -2%;
+    margin-left: 0px;
 }
 
 .center {
