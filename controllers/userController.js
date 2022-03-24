@@ -8,6 +8,7 @@ let wabaSandbox = require('../public/whatsappSandbox.json');
 let abc = require('../public/abc.json');
 let gbm = require('../public/gbm.json');
 let teams = require('../public/teams.json');
+let chatwidget = require('../public/tclchatwidget.json');
 
 let CronController = {
         getJsonData:function (req, res, next) {
@@ -34,6 +35,8 @@ let CronController = {
                                 return res.send(gbm);
                         }else if(req.query.connector == 'teams'){
                                 return res.send(teams);
+                        }else if(req.query.connector == 'chatwidget'){
+                                return res.send(chatwidget);
                         }else{
                                 return res.send(wa);
                         }

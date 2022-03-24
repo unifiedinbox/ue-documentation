@@ -1,0 +1,702 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "\n# Introduction\n\nWelcome to the UnificationEngine® ChatWidget API! You can use our API to access UnificationEngine® API endpoints, which can communicate with ChatWidget.\n",
+      "version": "v2",
+      "title": "TCL ChatWidget"
+    },
+    "host": "apiv2.unificationengine.com",
+    "basePath": "/v2",
+    "tags": [
+      {
+        "name": "Connection",
+        "description": "Add Connection"
+      },
+      {
+        "name": "Send messages",
+        "description": "Messaging using UnificationEngine®"
+      }
+    ],
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+      "/connection/add": {
+        "post": {
+          "tags": [
+            "Connection"
+          ],
+          "summary": "Add connection.",
+          "description": "This endpoint will add a connection to the user of the application. A connection is an authenticated instance of a connector. A connector, which has to be added in the developer portal, is a bridge between the service and the application. The uri parameter part for this api call consists of three parts: \n\n* Connector identifier (scheme of uri) \n* Service access token \n* Service domain name\n\nThe \"name\" parameter is used to identify the connection for the user, which is required for the further api calls using this connection. Once a connection is successfully added, it can be identified by using the \"name\" as \"unified://name\". The name should not contain any spaces and slashes. This api call should be authenticated with the key and secret of the user.\n# Add connection uri details\n\n__The params has to be appended as query string at the end of uri.__\n\\\nWhile adding a connection, the uri parts like service access token, secret and query parameter values should be encoded in the application.\n\\\nThe uri parts decoding should be handled in the connector for each api request.\n\\\n**The command to add a ChatWidget connection is**\n\n    curl -XPOST https://apiv2.unificationengine.com/v2/connection/add -u ACCESS-KEY:ACCESS-SECRET --data '{\"uri\":\"tclchatwidget://@tclchatwidget.com?user_id=PROFILE_CHATBOT_ID\",\"name\":\"UNIQUE_CONNECTION_IDENTIFIER\"}' -k\n\nTo add a new connection \"UNIQUE_CONNECTION_IDENTIFIER\" and \"PROFILE_CHATBOT_ID\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ : Connection name, you can give a unique name for each connection. <br> __PROFILE_CHATBOT_ID__: The Unique Id to which the message has to be sent. It will be there in the “receiveraddress” in webhook.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/connectionAdd"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/connectionAddResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#text": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message Text",
+          "description": "This endpoint will send a text message to ChatWidget Services. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application.\n\\\nTo send a new message \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n\\\nThe \"**type**\" available in message parts is body.\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __MESSAGE_BODY__: The message to be sent <br> __MESSAGE_BODY_SIZE__: The size of the MESSAGE_BODY <br> __CONTENT_TYPE__: Supported Content-Types are text/plain and text/html",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageText"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#image": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Image",
+          "description": "This endpoint will send an  Image to service. The contentType in the ‘part' parameter should be one of the connector capabilities, which can be seen when adding the connector to your application. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is image_link.\n\\\nThe contentType's that are supported by UE are listed below\n\n1. image/jpg\n2. image/png\n\nAny contentType  which is not supported by UE will be treated as **binary** and UE will send the contentType as received to the connector.\nTo send image \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"IMAGE_LINK\" , \"IMAGE_LINK_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __IMAGE_LINK__:  The image link to be sent for eg: https://uibai.s3.eu-central-1.amazonaws.com/1603517259386 <br> __IMAGE_LINK_SIZE__: The character length of the image link to be sent <br> __CONTENT_TYPE__: Supported Content-Types are image/jpeg and image/png <br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageImage"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#document": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Document",
+          "description": "This endpoint will send a document message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum spported size is 100 MB.\nThe \"**type**\" available in message parts is file.\n\\\nTo send document  \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"DOCUMENT_LINK\" , \"DOCUMENT_LINK_SIZE \" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __DOCUMENT_LINK__:  The document link to be sent for eg: http://www.africau.edu/images/default/sample.pdf <br> __DOCUMENT_LINK_SIZE__: The character length of the document link to be sent <br> __CONTENT_TYPE__: Supported Content-Types application/pdf, application/msword, application/vnd.ms-powerpoint, application/vnd.ms-excel, text/plain <br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageDocument"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#audio": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Audio",
+          "description": "This endpoint will send a audio message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\nMaximum spported size is 100 MB.\nThe \"**type**\" available in message parts is audio_link.\n\\\nTo send document  \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", “CONTENT_TYPE”, \"AUDIO_LINK\" , \"AUDIO_LINK_SIZE\" has to be changed.\n\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __AUDIO_LINK__:  The audio link to be sent for eg: http://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3 <br> __AUDIO_LINK_SIZE__: The character length of the audio link to be sent <br> __CONTENT_TYPE__: Supported Content-Types audio/acc, audio/mp4, audio/amr, audio/mpeg, audio/ogg; codecs=opus Note: The base audio/ogg type is not supported.<br> __FILE_NAME__: The name to be displayed for the file ",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageAudio"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#button": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Button",
+          "description": "This endpoint will send a Button message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is quickreply.\n\\\nTo send a new message \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"“BUTTON_TITLE”\", \"“BUTTON_PAYLOAD”\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __BUTTON_TITLE__: Button title <br> __BUTTON_PAYLOAD__: Button payload, This will be the text that will be triggered when button is clicked. <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageButton"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      },
+      "/message/send#card": {
+        "post": {
+          "tags": [
+            "Send messages"
+          ],
+          "summary": "Send Message - Card",
+          "description": "This endpoint will send a Card message to service. \n\\\nThis api call should be authenticated with the key and secret of the user.\n\\\nThe \"**type**\" available in message parts is generic/elements.\n\\\nTo send a new message \"PROFILE_CHATBOT_ID\", \"UNIQUE_CONNECTION_IDENTIFIER\", \"“BUTTON_TITLE”\", \"“BUTTON_PAYLOAD”\", \"MESSAGE_BODY\" and \"MESSAGE_BODY_SIZE\" has to be changed.\n`Remember — the API requires authentication!`\n",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "__UNIQUE_CONNECTION_IDENTIFIER__ :Connection name <br> __PROFILE_CHATBOT_ID__: The Unique id of user to which the message has to be sent. It will be there in the “receiveraddress” in webhook. <br> __BUTTON_TITLE__: Button title <br> __BUTTON_PAYLOAD__: Button payload, This will be the text that will be triggered when button is clicked. <br> __MESSAGE_BODY_SIZE__: The character length of the data to be sent. <br> __IMAGE_URL__: Image url. <br> __MESSAGE_BODY__: The message to be sent.",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/sendMessageCard"
+              }
+            }
+          ],
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Api Success",
+              "schema": {
+                "$ref": "#/definitions/sendMessageResponse"
+              }
+            },
+            "401": {
+              "description": "Authentication required!"
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "userAuth": {
+        "description": "# User Authentication\n\nUse **User accesskey** as *Username* and **User Secret** as *Password*\n\n(If you don’t have the access keys, please contact support@uib.ai with the details like company name, usecase and channels needed. Our sales representative will contact you.)",
+        "type": "basic"
+      }
+    },
+    "definitions": {
+      "sendMessageText": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "CONTENT_TYPE",
+                "data": "MESSAGE_BODY",
+                "size": "MESSAGE_BODY_SIZE",
+                "type": "body",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageImage": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "0",
+                "contentType": "CONTENT_TYPE",
+                "size": "IMAGE_LINK_SIZE",
+                "type": "image_link",
+                "name": "FILE_NAME",
+                "data": "IMAGE_LINK",
+                "sort": 1
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageDocument": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "data": "DOCUMENT_LINK",
+                "name": "FILE_NAME",
+                "size": "DOCUMENT_LINK_SIZE",
+                "type": "file",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageAudio": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "CONTENT_TYPE",
+                "data": "AUDIO_LINK",
+                "size": "AUDIO_LINK_SIZE",
+                "name": "FILE_NAME",
+                "type": "audio_link",
+                "sort": 0
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageButton": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                "id": "1",
+                "contentType": "text/plain",
+                "data": "MESSAGE_BODY",
+                "size": 1000,
+                "type": "body",
+                "sort": 0
+              },
+              {
+                "id": "2",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+                "size": 1000,
+                "type": "quickreply",
+                "sort": 1
+              },
+              {
+                "id": "3",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+                "size": 1000,
+                "type": "quickreply",
+                "sort": 2
+              },
+              {
+                "id": "4",
+                "contentType": "text/plain",
+                "data": "{\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\"}",
+                "size": 1000,
+                "type": "quickreply",
+                "sort": 3
+              }
+            ]
+          }
+        }
+      },
+      "sendMessageCard": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "$ref": "#/definitions/sendMessage"
+          }
+        },
+        "example": {
+          "message": {
+            "sender": {
+              "address": "test"
+            },
+            "receivers": [
+              {
+                "name": "Me",
+                "address": "PROFILE_CHATBOT_ID",
+                "Connector": "UNIQUE_CONNECTION_IDENTIFIER"
+              }
+            ],
+            "subject": "",
+            "parts": [
+              {
+                 "id":"1",
+                 "contentType":"text/html",
+                 "data":"MESSAGE_BODY",
+                 "size":134,
+                 "type":"body",
+                 "sort":0
+              },
+              {
+                 "id":"1",
+                 "contentType":"text/plain",
+                 "data":"{\"title\":\"BUTTON_TITLE\",\"image_url\":\"IMAGE_URL\",\"buttons\":[{\"type\":\"postback\",\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\",\"subtitle\":\"BUTTON_SUBTITLE\"}]}",
+                 "size":134,
+                 "type":"generic/elements",
+                 "sort":0
+              },
+              {
+                 "id":"2",
+                 "contentType":"text/plain",
+                 "data":"{\"title\":\"BUTTON_TITLE\",\"image_url\":\"IMAGE_URL\",\"buttons\":[{\"type\":\"postback\",\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\",\"subtitle\":\"BUTTON_SUBTITLE\"}]}",
+                 "size":134,
+                 "type":"generic/elements",
+                 "sort":0
+              },
+              {
+                 "id":"3",
+                 "contentType":"text/plain",
+                 "data":"{\"title\":\"BUTTON_TITLE\",\"image_url\":\"IMAGE_URL\",\"buttons\":[{\"type\":\"postback\",\"title\":\"BUTTON_TITLE\",\"payload\":\"BUTTON_PAYLOAD\",\"subtitle\":\"BUTTON_SUBTITLE\"}]}",
+                 "size":134,
+                 "type":"generic/elements",
+                 "sort":0
+              }
+           ]
+          }
+        }
+      },
+      "successMessage": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          }
+        }
+      },
+      "connectionAdd": {
+        "type": "object",
+        "required": [
+          "name",
+          "uri"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "example": "tclchatwidget://@tclchatwidget.com?user_id=PROFILE_CHATBOT_ID"
+          },
+          "name": {
+            "type": "string",
+            "example": "UNIQUE_CONNECTION_IDENTIFIER"
+          }
+        }
+      },
+      "connectionAddResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "Status of Api"
+          },
+          "info": {
+            "type": "string",
+            "example": "200 OK",
+            "description": "Info about status"
+          }
+        }
+      },
+      "sendMessageResponse": {
+        "type": "object",
+        "properties": {
+          "Status": {
+            "$ref": "#/definitions/sendMessageResponseStatus"
+          },
+          "URIs": {
+            "type": "array",
+            "description": "Send list",
+            "items": {
+              "type": "string",
+              "example": "tclchatwidget://tclchatwidget.com/gBEGkYYGSIiAAgnzWjuGCt_OmyE"
+            }
+          }
+        }
+      },
+      "sendMessage_receivers": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "Connector": {
+            "type": "string"
+          }
+        }
+      },
+      "sendMessage_message_parts": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sort": {
+            "type": "number"
+          }
+        }
+      },
+      "sendMessage": {
+        "type": "object",
+        "properties": {
+          "receivers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessage_receivers"
+            }
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/sendMessage_message_parts"
+            }
+          }
+        }
+      },
+      "sendMessageResponseStatus_UNIQUE_CONNECTION_IDENTIFIER": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "200",
+            "description": "status"
+          },
+          "info": {
+            "type": "string",
+            "example": "OK",
+            "description": "staus"
+          }
+        }
+      },
+      "sendMessageResponseStatus": {
+        "type": "object",
+        "properties": {
+          "UNIQUE_CONNECTION_IDENTIFIER": {
+            "$ref": "#/definitions/sendMessageResponseStatus_UNIQUE_CONNECTION_IDENTIFIER"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication required!"
+      },
+      "successMessage": {
+        "description": "A User object",
+        "schema": {
+          "$ref": "#/definitions/successMessage"
+        }
+      }
+    }
+  }
